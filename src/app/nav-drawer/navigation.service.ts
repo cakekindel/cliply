@@ -8,7 +8,7 @@ export class NavigationService {
         title: 'Queue',
         icon: 'queue',
         route: '/queue',
-        selected: true,
+        selected: false,
         click: () => this.navigateByItem(this.queueNavItem),
     };
     public readonly libraryNavItem: NavItem = {

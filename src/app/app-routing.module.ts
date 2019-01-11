@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { QueueComponent } from './queue/queue.component';
+import { SplashComponent } from './splash/splash.component';
 
 const routes: Routes = [
     {
-        path: 'queue',
-        component: QueueComponent
+        path: 'splash',
+        component: SplashComponent
     },
     {
-        path: '**',
+        path: 'queue',
         component: QueueComponent
     }
 ];
