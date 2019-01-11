@@ -25,4 +25,10 @@ body {
 
 h1, h2, h3, h4 {
     font-weight: $font-weight-bold;
+    margin: 0;
+}
+
+h5 {
+    font-weight: $font-weight-semibold;
+    margin: 0;
 }
