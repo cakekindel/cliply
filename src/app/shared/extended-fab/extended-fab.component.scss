@@ -1,4 +1,5 @@
 @import 'colors.scss';
+@import 'mixins.scss';
 
 :host {
     display: flex;
@@ -7,23 +8,35 @@
     padding-right: 20px;
     align-items: center;
     width: auto;
+
+    cursor: pointer;
+    transition: background-color 0.1s;
     
     &.primary {
-        background: $color-secondary;
-        color: $color-font-secondary;   
+        @include background-opacity($color-secondary, 0.8);
+        color: $color-font-secondary;
+
+        &:hover {
+            background: $color-secondary;
+        }
     }
 
     &.secondary {
-        background: $color-primary-light;
-        color: $color-secondary-light;   
+        @include background-opacity($color-primary-light, 0.8);
+        color: $color-secondary-light;
+
+        &:hover {
+            background: $color-primary-light;
+        }
     }
 
     i {
         font-size: 24px;
-        margin-right: 10px;
+        margin-right: 8px;
     }
 
     span {
         letter-spacing: 1px;
+        font-size: 14px;
     }
 }
