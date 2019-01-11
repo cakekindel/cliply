@@ -4,7 +4,11 @@ import { QueueComponent } from './queue/queue.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'queue',
+        component: QueueComponent
+    },
+    {
+        path: '**',
         component: QueueComponent
     }
 ];
