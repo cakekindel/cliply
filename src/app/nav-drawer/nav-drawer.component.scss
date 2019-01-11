@@ -1,0 +1,29 @@
+@import 'colors.scss';
+:host {
+    // Positioning
+    position: fixed;
+
+    // Box-model
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 256px;
+    height: 100%;
+    padding: 16px;
+
+    // Visual
+    border-right: 2px solid $color-primary-light;
+
+    // Misc
+
+    img.logo-flat {
+        margin: 24px 0;
+        width: 175px;
+        height: auto;
+    }
+
+    app-nav-item {
+        margin-bottom: 8px;
+    }
+}
