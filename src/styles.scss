@@ -1,7 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'colors.scss';
+@import 'fonts.scss';
+
 html, body {
   margin: 0;
   padding: 0;
 
   height: 100%;
+}
+
+body {
+    background: $color-background;
+    color: $color-font-primary;
+    font-family: $font-family;
+    font-weight: $font-weight-semibold;
+}
+
+h1, h2, h3, h4 {
+    font-weight: $font-weight-bold;
 }
