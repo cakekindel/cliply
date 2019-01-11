@@ -17,10 +17,11 @@ import { ElectronService } from './providers/electron.service';
 import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
 import { NavDrawerComponent } from './nav-drawer/nav-drawer.component';
 import { NavItemComponent } from './nav-drawer/nav-item/nav-item.component';
 import { NavigationService } from './nav-drawer/navigation.service';
+import { ExtendedFabComponent } from './shared/extended-fab/extended-fab.component';
+import { QueueComponent } from './queue/queue.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -30,10 +31,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
     declarations: [
         AppComponent,
-        HomeComponent,
         WebviewDirective,
         NavDrawerComponent,
-        NavItemComponent
+        NavItemComponent,
+        ExtendedFabComponent,
+        QueueComponent
     ],
     imports: [
         BrowserModule,
