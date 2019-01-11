@@ -22,6 +22,7 @@ import { NavItemComponent } from './nav-drawer/nav-item/nav-item.component';
 import { NavigationService } from './nav-drawer/navigation.service';
 import { ExtendedFabComponent } from './shared/extended-fab/extended-fab.component';
 import { QueueComponent } from './queue/queue.component';
+import { SplashComponent } from './splash/splash.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -35,7 +36,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavDrawerComponent,
         NavItemComponent,
         ExtendedFabComponent,
-        QueueComponent
+        QueueComponent,
+        SplashComponent
     ],
     imports: [
         BrowserModule,
