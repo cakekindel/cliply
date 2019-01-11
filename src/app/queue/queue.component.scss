@@ -1,7 +1,12 @@
 :host {
-    app-extended-fab {
+    .fabs {
+        display: flex;
         position: fixed;
         bottom: 16px;
         right: 16px;
+
+        app-extended-fab {
+            margin-left: 16px;
+        }
     }
 }
