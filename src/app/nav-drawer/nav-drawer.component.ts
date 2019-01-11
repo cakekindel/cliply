@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from './navigation.service';
 
 @Component({
     selector: 'app-nav-drawer',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./nav-drawer.component.scss']
 })
 export class NavDrawerComponent implements OnInit {
-    constructor() { }
+    constructor(private navService: NavigationService) { }
 
     ngOnInit() { }
 }
