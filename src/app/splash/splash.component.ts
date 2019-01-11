@@ -7,11 +7,13 @@ import { NavigationService } from '../nav-drawer/navigation.service';
     templateUrl: './splash.component.html',
     styleUrls: ['./splash.component.scss'],
     host: {
-        '[class.fade-out]': 'fadeOut'
+        '[class.fade-out]': 'fadeOut',
     }
 })
 export class SplashComponent implements OnInit {
     fadeOut = false;
+    videoDuration = 2000;
+    fadeDuration = 500;
 
     @ViewChild('splash_animation') set splashAnimation(video: ElementRef<HTMLVideoElement>) {
         if (video) {
@@ -22,11 +24,11 @@ export class SplashComponent implements OnInit {
     constructor(private navigationService: NavigationService) { }
 
     ngOnInit() {
-        timer(2500).subscribe(
+        timer(this.fadeDuration + this.videoDuration).subscribe(
             () => { this.fadeOut = true; },
         );
 
-        timer(3000).subscribe(
+        timer(this.fadeDuration + this.videoDuration + this.fadeDuration).subscribe(
             () => { this.navigationService.navigateByItem(this.navigationService.queueNavItem); }
         );
     }
