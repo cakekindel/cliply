@@ -20,6 +20,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavDrawerComponent } from './nav-drawer/nav-drawer.component';
 import { NavItemComponent } from './nav-drawer/nav-item/nav-item.component';
+import { NavigationService } from './nav-drawer/navigation.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -47,7 +48,10 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         })
     ],
-    providers: [ElectronService],
+    providers: [
+        ElectronService,
+        NavigationService,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
