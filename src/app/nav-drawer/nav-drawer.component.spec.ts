@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidebarComponent as NavDrawerComponent } from './nav-drawer.component';
+import { NavDrawerComponent as NavDrawerComponent } from './nav-drawer.component';
 
 describe('NavDrawerComponent', () => {
     let component: NavDrawerComponent;

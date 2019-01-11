@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './nav-drawer.component.html',
     styleUrls: ['./nav-drawer.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class NavDrawerComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }
