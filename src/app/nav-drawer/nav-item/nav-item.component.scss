@@ -1,0 +1,27 @@
+@import 'colors.scss';
+@import 'mixins.scss';
+
+:host {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px;
+    
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.1s;
+
+    &.selected {
+        color: $color-secondary;
+        @include background-opacity($color-secondary, 0.1);
+    }
+
+    &:hover:not(.selected) {
+        @include background-opacity($color-primary-light, 0.3);        
+    }
+
+    i {
+        margin-left: 2px;
+        margin-right: 32px;
+    }
+}
