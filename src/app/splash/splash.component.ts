@@ -15,12 +15,6 @@ export class SplashComponent implements OnInit {
     videoDuration = 2000;
     fadeDuration = 500;
 
-    @ViewChild('splash_animation') set splashAnimation(video: ElementRef<HTMLVideoElement>) {
-        if (video) {
-            video.nativeElement.playbackRate = 1.5;
-        }
-    }
-
     constructor(private navigationService: NavigationService) { }
 
     ngOnInit() {
@@ -29,7 +23,7 @@ export class SplashComponent implements OnInit {
         );
 
         timer(this.fadeDuration + this.videoDuration + this.fadeDuration).subscribe(
-            () => { this.navigationService.navigateByItem(this.navigationService.queueNavItem); }
+            () => { this.navigationService.navigateByItem(this.navigationService.navItems.queue); }
         );
     }
 }
