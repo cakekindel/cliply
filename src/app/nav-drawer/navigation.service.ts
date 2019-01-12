@@ -4,46 +4,53 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class NavigationService {
-    public readonly queueNavItem: NavItem = {
-        title: 'Queue',
-        icon: 'queue',
-        route: '/queue',
-        selected: false,
-        click: () => this.navigateByItem(this.queueNavItem),
-    };
-    public readonly libraryNavItem: NavItem = {
-        title: 'Library',
-        icon: 'video_library',
-        route: '/library',
-        selected: false,
-        click: () => this.navigateByItem(this.libraryNavItem),
-    };
-    public readonly connectionsNavItem: NavItem = {
-        title: 'Connections',
-        icon: 'people',
-        route: '/connections',
-        selected: false,
-        click: () => this.navigateByItem(this.connectionsNavItem),
-    };
-    public readonly settingsNavItem: NavItem = {
-        title: 'Settings',
-        icon: 'settings',
-        route: '/settings',
-        selected: false,
-        click: () => this.navigateByItem(this.settingsNavItem),
-    };
+    public readonly navItems: {
+        queue: NavItem,
+        library: NavItem,
+        connections: NavItem,
+        settings: NavItem,
+    } = {
+            queue: {
+                title: 'Queue',
+                icon: 'queue',
+                route: '/queue',
+                selected: false,
+                click: () => this.navigateByItem(this.navItems.queue),
+            } as NavItem,
+            library: {
+                title: 'Library',
+                icon: 'video_library',
+                route: '/library',
+                selected: false,
+                click: () => this.navigateByItem(this.navItems.library),
+            } as NavItem,
+            connections: {
+                title: 'Connections',
+                icon: 'people',
+                route: '/connections',
+                selected: false,
+                click: () => this.navigateByItem(this.navItems.connections),
+            } as NavItem,
+            settings: {
+                title: 'Settings',
+                icon: 'settings',
+                route: '/settings',
+                selected: false,
+                click: () => this.navigateByItem(this.navItems.settings),
+            } as NavItem,
+        };
 
-    public navItems = [
-        this.queueNavItem,
-        this.libraryNavItem,
-        this.connectionsNavItem,
-        this.settingsNavItem
+    public navItemsIterable = [
+        this.navItems.queue,
+        this.navItems.library,
+        this.navItems.connections,
+        this.navItems.settings,
     ];
 
     constructor(private router: Router) { }
 
     public navigateByItem(navItem: NavItem) {
-        this.navItems.forEach((i) => i.selected = false);
+        this.navItemsIterable.forEach((i) => i.selected = false);
         navItem.selected = true;
         this.router.navigateByUrl(navItem.route);
     }
