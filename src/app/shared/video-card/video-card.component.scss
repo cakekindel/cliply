@@ -1,0 +1,35 @@
+@import 'colors.scss';
+@import 'fonts.scss';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 344px;
+    padding: 16px;
+    border-radius: 4px;
+    background: $color-primary;
+
+    .title-container {
+        .title {
+            font-weight: $font-weight-semibold;
+            font-size: 21px;
+        }
+
+        .sub-title {
+            font-weight: $font-weight-regular;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+    }
+
+    .thumbnail {
+        margin: 16px -16px;
+        width: 344px;
+        height: auto;
+    }
+
+    .buttons {
+        margin-left: -8px;
+        margin-bottom: -8px;
+    }
+}
