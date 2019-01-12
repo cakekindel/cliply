@@ -2,17 +2,19 @@
 @import 'mixins.scss';
 
 :host {
-    display: flex;
-    border-radius: 24px;
-    padding: 10px;
-    padding-right: 20px;
-    align-items: center;
-    width: auto;
-
-    cursor: pointer;
-    transition: background-color 0.1s;
+    .fab-container {
+        display: flex;
+        border-radius: 24px;
+        padding: 10px;
+        padding-right: 20px;
+        align-items: center;
+        width: auto;
     
-    &.primary {
+        cursor: pointer;
+        transition: background-color 0.1s, box-shadow 0.2s;
+    }
+    
+    &.primary .fab-container {
         @include background-opacity($color-secondary, 0.8);
         color: $color-font-secondary;
 
@@ -21,7 +23,7 @@
         }
     }
 
-    &.secondary {
+    &.secondary .fab-container {
         @include background-opacity($color-primary-light, 0.8);
         color: $color-secondary-light;
 

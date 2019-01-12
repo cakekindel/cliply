@@ -6,10 +6,21 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./extended-fab.component.scss']
 })
 export class ExtendedFabComponent implements OnInit {
+    pressed = false;
+
     @Input() icon: string;
-    @Output() click = new EventEmitter<void>();
+    @Output() clicked = new EventEmitter<void>();
 
     constructor() { }
 
     ngOnInit() { }
+
+    mouseDown() {
+        this.pressed = true;
+    }
+
+    mouseUp() {
+        this.pressed = false;
+        this.clicked.next();
+    }
 }

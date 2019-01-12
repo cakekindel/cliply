@@ -1,4 +1,12 @@
-<i class="material-icons">{{icon}}</i>
-<span>
-    <ng-content></ng-content>
-</span>
+<div    class="fab-container"
+        (mousedown)="mouseDown()"
+        (mouseup)="mouseUp()"
+        [class.mat-elevation-z6]="!pressed"
+        [class.mat-elevation-z12]="pressed"
+        matRipple>
+
+    <i class="material-icons">{{icon}}</i>
+    <span>
+        <ng-content></ng-content>
+    </span>
+</div>
