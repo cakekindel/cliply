@@ -29,7 +29,8 @@
     }
 
     .buttons {
-        margin-left: -8px;
-        margin-bottom: -8px;
+        display: flex;
+        flex-direction: row-reverse;
+        margin: -8px;
     }
 }
