@@ -24,6 +24,7 @@ import { ExtendedFabComponent } from './shared/extended-fab/extended-fab.compone
 import { QueueComponent } from './queue/queue.component';
 import { SplashComponent } from './splash/splash.component';
 import { ChipComponent } from './shared/chip/chip.component';
+import { RippleComponent } from './shared/ripple/ripple.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -39,7 +40,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ExtendedFabComponent,
         QueueComponent,
         SplashComponent,
-        ChipComponent
+        ChipComponent,
+        RippleComponent
     ],
     imports: [
         BrowserModule,
