@@ -5,7 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
     host: {
-        '[class]': 'type.className'
+        '[class]': 'type.className',
     }
 })
 export class ButtonComponent implements OnInit {
@@ -23,6 +23,8 @@ export class ButtonComponent implements OnInit {
     @Input() set text(val: string) {
         this.type = this.buttonTypes.text;
     }
+
+    @Input() icon: string;
 
     @Output() click = new EventEmitter<void>();
 

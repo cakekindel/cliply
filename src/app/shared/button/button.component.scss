@@ -1,20 +1,22 @@
 @import 'colors.scss';
 @import 'mixins.scss';
 
-:host {
+.btn-container {
     font-size: 14px;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: background-color 0.1s;
+    transition: background-color 0.2s;
     display: flex;
     padding: 8px 16px;
     border-radius: 4px;
     min-width: 64px;
-    width: fit-content;
+    width: auto;
+    height: 36px;
+    align-items: center;
 
     &.contained-btn {
         color: $color-font-secondary;
-        @include background-opacity($color-secondary, 0.8);
+        @include background-opacity($color-secondary, 0.9);
     
         &:hover {
             @include background-opacity($color-secondary, 1);
@@ -36,5 +38,11 @@
         &:hover {
             @include background-opacity($color-primary-light, 0.8);
         }
+    }
+
+    i {
+        font-size: 24px;
+        margin-right: 8px;
+        margin-left: -8px;
     }
 }
