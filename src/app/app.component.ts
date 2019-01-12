@@ -3,6 +3,7 @@ import { ElectronService } from './electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../environments/environment';
 import { Router } from '@angular/router';
+import { NavigationService } from './nav-drawer/navigation.service';
 
 @Component({
     selector: 'app-root',
@@ -13,11 +14,15 @@ export class AppComponent {
     constructor(
         electronService: ElectronService,
         translate: TranslateService,
-        router: Router
+        router: Router,
+        navSvc: NavigationService
     ) {
         translate.setDefaultLang('en');
         console.log('AppConfig', AppConfig);
         router.navigateByUrl('splash');
+
+        // comment this line to show splash screen
+        navSvc.navigateByItem(navSvc.navItems.queue);
 
         if (electronService.isElectron()) {
             console.log('Mode electron');
