@@ -5,17 +5,16 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     templateUrl: './button.component.html',
     styleUrls: ['./button.component.scss'],
     host: {
-        '[class]': 'this.type.className'
+        '[class]': 'type.className'
     }
 })
 export class ButtonComponent implements OnInit {
     buttonTypes = {
-        regular: { className: '' } as ButtonType,
+        contained: { className: 'contained-btn' } as ButtonType,
         outlined: { className: 'outlined-btn' } as ButtonType,
         text: { className: 'text-btn' } as ButtonType,
     };
-
-    type = this.buttonTypes.regular;
+    type = this.buttonTypes.contained;
 
     @Input() set outlined(val: string) {
         this.type = this.buttonTypes.outlined;

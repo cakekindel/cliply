@@ -7,11 +7,29 @@
     cursor: pointer;
     transition: background-color 0.1s;
     display: flex;
-    padding: 8px;
+    padding: 8px 16px;
     border-radius: 4px;
+    min-width: 64px;
     width: fit-content;
 
+    &.contained-btn {
+        color: $color-font-secondary;
+        @include background-opacity($color-secondary, 0.8);
+    
+        &:hover {
+            @include background-opacity($color-secondary, 1);
+        }
+    }
+
+    &.outlined-btn {
+        border: 1px solid rgba($color-font-primary, 0.5);
+    }
+
     &.text-btn {
+        padding: 8px;
+    }
+
+    &.text-btn, &.outlined-btn {
         color: $color-secondary;
         @include background-opacity($color-primary-light, 0);
 
