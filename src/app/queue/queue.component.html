@@ -1,14 +1,7 @@
-<app-top-bar [title]="'Clip Queue'">
-    <div class="action-items">
-        <i class="material-icons mat-ripple" matRipple matTooltip="Add Output Directory Group">create_new_folder</i>
-        <i class="material-icons mat-ripple" matRipple matTooltip="Add All Clips From Folder">folder_open</i>
-    </div>
-    <div class="fabs">
-        <app-extended-fab icon="add" (clicked)="doSomething()">ADD CLIP(S)</app-extended-fab>
-        <app-extended-fab icon="play_arrow" (clicked)="doSomething()" secondary>EXPORT ALL CLIPS</app-extended-fab>
-    </div>
-</app-top-bar>
+<app-top-bar [currentState]="topBarState"></app-top-bar>
 
-<div class="queue-body">
-    <app-clip-card [clip]="testClip"></app-clip-card>
+<div class="clips">
+    <app-clip-card [clip]="clip" (editClip)=editClip(clip) *ngFor="let clip of clips"></app-clip-card>
 </div>
+
+<app-clip-view *ngIf="selectedClip"></app-clip-view>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'app-extended-fab',
@@ -7,16 +7,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ExtendedFabComponent implements OnInit {
     pressed = false;
-    type: FabType = { className: 'primary', rippleColor: 'rgba(0,0,0,0.1)' };
 
-    @Input() set secondary(val: string) {
-        this.type = {
-            className: 'secondary', rippleColor: 'rgba(255,255,255,0.1)'
-        };
-    }
-
-    @Input() icon: string;
-    @Output() clicked = new EventEmitter<void>();
+    @Input() model: ExtendedFab;
 
     constructor() { }
 
@@ -28,9 +20,20 @@ export class ExtendedFabComponent implements OnInit {
 
     mouseUp() {
         this.pressed = false;
-        this.clicked.next();
     }
 }
+
+export interface ExtendedFab {
+    label: string;
+    icon: string;
+    type: FabType;
+    click: () => void;
+}
+
+export const FabTypes = {
+    Primary: { className: 'primary', rippleColor: 'rgba(0,0,0,0.1)' } as FabType,
+    Secondary: { className: 'secondary', rippleColor: 'rgba(255,255,255,0.1)' } as FabType
+};
 
 interface FabType {
     className: string;

@@ -8,7 +8,7 @@
     background-color: $color-primary;
     margin-bottom: 24px;
 
-    .title {
+    ::ng-deep .title {
         position: absolute;
         top: 24px;
         left: 72px;

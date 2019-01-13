@@ -1,4 +1,9 @@
-<div class="top-bar">
-    <ng-content></ng-content>
-    <h6 class="title">{{title}}</h6>
+<div *ngIf="state" class="top-bar" [style.background-color]="state.backgroundColor">
+    <h6 class="title">{{state.title}}</h6>
+    <div class="action-items" [ngClass]="{ 'fade-out fast': false }">
+        <i class="material-icons mat-ripple" matRipple matTooltip="{{actionItem.tooltipText}}" *ngFor="let actionItem of state.actionItems">{{actionItem.icon}}</i>
+    </div>
+    <div class="fabs" [ngClass]="{ 'fade-out fast': false }">
+        <app-extended-fab [model]="fab" *ngFor="let fab of state.fabs"></app-extended-fab>
+    </div>
 </div>

@@ -1,13 +1,11 @@
-<div [class]="'fab-container mat-ripple ' + type.className"
+<div [class]="'fab-container mat-ripple ' + model.type.className"
      (mousedown)="mouseDown()"
      (mouseup)="mouseUp()"
      [class.mat-elevation-z6]="!pressed"
      [class.mat-elevation-z12]="pressed"
-     [matRippleColor]="type.rippleColor"
+     [matRippleColor]="model.type.rippleColor"
      matRipple>
 
-    <i class="material-icons">{{icon}}</i>
-    <span>
-        <ng-content></ng-content>
-    </span>
+    <i class="material-icons">{{model.icon}}</i>
+    <span>{{model.label}}</span>
 </div>
