@@ -1,8 +1,9 @@
-<div class="fab-container"
+<div [class]="'fab-container mat-ripple ' + type.className"
      (mousedown)="mouseDown()"
      (mouseup)="mouseUp()"
      [class.mat-elevation-z6]="!pressed"
      [class.mat-elevation-z12]="pressed"
+     [matRippleColor]="type.rippleColor"
      matRipple>
 
     <i class="material-icons">{{icon}}</i>
