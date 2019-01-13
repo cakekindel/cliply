@@ -1,13 +1,18 @@
 <div class="video-card mat-ripple mat-elevation-z1" matRipple>
     <div class="title-container">
-        <h6 class="title">My Video</h6>
+        <h6 class="title">{{clip.title}}</h6>
         <span class="sub-title">
-            4:13 &bull; 20MB &bull;
-            <img class="youtube-logo" src="../../../assets/images/youtube_logo_light.svg" matTooltip="Will be uploaded to YouTube">
+            {{clip.duration}} &bull; {{clip.fileMetadata.sizeMb}}MB &bull;
+            <img class="youtube-logo" src="../../../assets/images/youtube_logo_light.svg" matTooltip="Will be uploaded to YouTube" *ngIf="clip.uploadToYoutube">
         </span>
     </div>
-    <img class="thumbnail" src="../../../assets/images/demo_thumbnail.jpg" alt="">
+    <video class="thumbnail"
+           src="../../../assets/demo_clip.mp4"
+           (mouseover)="thumbnailMouseover()"
+           (mouseleave)="thumbnailMouseleave()"
+           #clip_thumbnail>
+    </video>
     <div class="buttons">
-        <app-button text>EXPORT</app-button>
+        <app-button text *ngIf="!clip.exported">EXPORT</app-button>
     </div>
 </div>
