@@ -1,14 +1,7 @@
 :host {
-    padding: 16px;
+    width: 100%;
 
-    .fabs {
-        display: flex;
-        position: fixed;
-        bottom: 16px;
-        right: 16px;
-
-        app-extended-fab {
-            margin-left: 16px;
-        }
+    .queue-body {
+        padding: 16px;
     }
 }

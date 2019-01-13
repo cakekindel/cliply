@@ -1,6 +1,14 @@
-<app-video-card></app-video-card>
+<app-top-bar [title]="'Clip Queue'">
+    <div class="action-items">
+        <i class="material-icons mat-ripple" matRipple matTooltip="Add Output Directory Group">create_new_folder</i>
+        <i class="material-icons mat-ripple" matRipple matTooltip="Add All Clips From Folder">folder_open</i>
+    </div>
+    <div class="fabs">
+        <app-extended-fab icon="add" (clicked)="doSomething()">ADD CLIP(S)</app-extended-fab>
+        <app-extended-fab icon="play_arrow" (clicked)="doSomething()" secondary>EXPORT ALL CLIPS</app-extended-fab>
+    </div>
+</app-top-bar>
 
-<div class="fabs">
-    <app-extended-fab icon="play_arrow" (clicked)="doSomething()" secondary>EXPORT ALL CLIPS</app-extended-fab>
-    <app-extended-fab icon="add" (clicked)="doSomething()">ADD CLIP</app-extended-fab>
+<div class="queue-body">
+    <app-video-card></app-video-card>
 </div>
