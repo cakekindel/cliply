@@ -7,13 +7,13 @@
     padding: 10px;
     padding-right: 20px;
     align-items: center;
-    width: auto;
+    height: 48px;
 
     cursor: pointer;
     transition: background-color 0.2s, box-shadow 0.2s;
     
     &.primary {
-        @include background-opacity($color-secondary, 0.8);
+        background-color: $color-secondary-dark;
         color: $color-font-secondary;
 
         &:hover {
@@ -22,7 +22,7 @@
     }
 
     &.secondary {
-        @include background-opacity($color-primary-light, 0.8);
+        background: $color-primary;
         color: $color-secondary-light;
 
         &:hover {
