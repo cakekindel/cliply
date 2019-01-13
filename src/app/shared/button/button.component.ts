@@ -9,35 +9,36 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     }
 })
 export class ButtonComponent implements OnInit {
+    pressed = false;
+
     buttonTypes = {
-        contained: { className: 'contained-btn' } as ButtonType,
-        outlined: { className: 'outlined-btn' } as ButtonType,
-        text: { className: 'text-btn' } as ButtonType,
+        contained: { className: 'contained-btn', rippleColor: 'rgba(0,0,0,0.1)' } as ButtonType,
+        outlined: { className: 'outlined-btn', rippleColor: 'rgba(255,255,255,0.1)' } as ButtonType,
+        text: { className: 'text-btn', rippleColor: 'rgba(255,255,255,0.1)' } as ButtonType,
     };
     type = this.buttonTypes.contained;
 
-    @Input() set outlined(val: string) {
-        this.type = this.buttonTypes.outlined;
-    }
-
-    @Input() set text(val: string) {
-        this.type = this.buttonTypes.text;
-    }
+    @Input() set outlined(val: string) { this.type = this.buttonTypes.outlined; }
+    @Input() set text(val: string) { this.type = this.buttonTypes.text; }
 
     @Input() icon: string;
-
-    @Output() click = new EventEmitter<void>();
+    @Output() clicked = new EventEmitter<void>();
 
     constructor() { }
 
     ngOnInit() { }
 
-    onClick(event: Event) {
-        event.stopPropagation();
-        this.click.next();
+    mouseDown() {
+        this.pressed = true;
+    }
+
+    mouseUp() {
+        this.pressed = false;
+        this.clicked.next();
     }
 }
 
 export interface ButtonType {
     className: string;
+    rippleColor: string;
 }

@@ -1,4 +1,10 @@
-<div [class]="'btn-container mat-ripple ' + type.className" matRipple>
-    <i class="material-icons" *ngIf="icon">{{icon}}</i>
-    <ng-content (click)="onClick()"></ng-content>
+<div [class]="'btn-container mat-ripple ' + type.className"
+     [class.mat-elevation-z6]="!pressed && type === buttonTypes.contained"
+     [class.mat-elevation-z12]="pressed && type === buttonTypes.contained"
+     (mousedown)="mouseDown()"
+     (mouseup)="mouseUp()"
+     matRipple
+     [matRippleColor]="type.rippleColor">
+    <i class="material-icons" *ngIf="icon && type === buttonTypes.contained">{{icon}}</i>
+    <ng-content></ng-content>
 </div>
