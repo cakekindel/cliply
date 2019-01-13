@@ -27,7 +27,7 @@ import { ExtendedFabComponent } from './shared/extended-fab/extended-fab.compone
 import { QueueComponent } from './queue/queue.component';
 import { SplashComponent } from './splash/splash.component';
 import { ChipComponent } from './shared/chip/chip.component';
-import { VideoCardComponent } from './shared/video-card/video-card.component';
+import { ClipCardComponent } from './shared/clip-card/clip-card.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 
@@ -46,7 +46,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         QueueComponent,
         SplashComponent,
         ChipComponent,
-        VideoCardComponent,
+        ClipCardComponent,
         ButtonComponent,
         TopBarComponent,
     ],
