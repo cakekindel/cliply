@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ExtendedFab } from '../extended-fab/extended-fab.component';
+import { timer } from 'rxjs';
 
 @Component({
     selector: 'app-top-bar',
@@ -8,9 +9,12 @@ import { ExtendedFab } from '../extended-fab/extended-fab.component';
 })
 export class TopBarComponent implements OnInit {
     state: TopBarState;
+    fadeOutItems = false;
+    fadeInItems = false;
+    hasFabs = false;
 
-    @Input() states?: TopBarState[];
     @Input() set currentState(state: TopBarState) {
+        this.hasFabs = state.fabs && state.fabs.length > 0;
         if (this.state) {
             this.transitionToState(state);
         } else {
@@ -23,15 +27,21 @@ export class TopBarComponent implements OnInit {
     ngOnInit() { }
 
     transitionToState(state: TopBarState) {
+        this.fadeOutItems = true;
 
+        timer(300).subscribe(() => {
+            this.state = state;
+            this.fadeOutItems = false;
+            this.fadeInItems = true;
+        });
     }
 }
 
 export interface TopBarState {
     title: string;
     back?: () => void;
-    fabs: ExtendedFab[];
-    actionItems: TopBarActionItem[];
+    fabs?: ExtendedFab[];
+    actionItems?: TopBarActionItem[];
 }
 
 export interface TopBarActionItem {

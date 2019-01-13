@@ -1,9 +1,22 @@
-<div *ngIf="state" class="top-bar" [style.background-color]="state.backgroundColor">
-    <h6 class="title">{{state.title}}</h6>
-    <div class="action-items" [ngClass]="{ 'fade-out fast': false }">
-        <i class="material-icons mat-ripple" matRipple matTooltip="{{actionItem.tooltipText}}" *ngFor="let actionItem of state.actionItems">{{actionItem.icon}}</i>
-    </div>
-    <div class="fabs" [ngClass]="{ 'fade-out fast': false }">
-        <app-extended-fab [model]="fab" *ngFor="let fab of state.fabs"></app-extended-fab>
+<div *ngIf="state" class="top-bar" [class.has-fabs]="hasFabs" [style.background-color]="state.backgroundColor">
+    <div class="top-bar-content" [class.fade-out-fast]="fadeOutItems" [class.fade-in-fast]="fadeInItems">
+        <i *ngIf="state.back !== undefined"
+           class="material-icons back"
+           (mouseup)="state.back()"
+           matRipple>
+        arrow_back
+        </i>
+        <h6 class="title">{{state.title}}</h6>
+        <div *ngIf="state.actionItems" class="action-items">
+            <i *ngFor="let actionItem of state.actionItems"
+               class="material-icons mat-ripple"
+               matTooltip="{{actionItem.tooltipText}}"
+               matRipple>
+                {{actionItem.icon}}
+            </i>
+        </div>
+        <div *ngIf="state.fabs" class="fabs">
+            <app-extended-fab [model]="fab" *ngFor="let fab of state.fabs"></app-extended-fab>
+        </div>
     </div>
 </div>

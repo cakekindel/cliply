@@ -36,7 +36,13 @@ export class QueueComponent implements OnInit {
 
     ngOnInit() { }
 
+    cancel() {
+        this.selectedClip = null;
+        this.topBarState = this.defaultTopBar;
+    }
+
     editClip(clip: Clip) {
+        this.topBarState = { title: `Edit Clip: ${clip.title}`, back: () => { this.cancel(); } };
         this.selectedClip = clip;
     }
 }
