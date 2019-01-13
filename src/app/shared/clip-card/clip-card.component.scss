@@ -1,7 +1,7 @@
 @import 'colors.scss';
 @import 'fonts.scss';
 
-.video-card {
+.clip-card {
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -33,7 +33,8 @@
     .thumbnail {
         margin: 16px -16px;
         width: 344px;
-        height: auto;
+        height: 192px;
+        object-fit: cover;
     }
 
     .buttons {

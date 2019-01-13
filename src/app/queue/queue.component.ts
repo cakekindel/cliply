@@ -41,8 +41,14 @@ export class QueueComponent implements OnInit {
         this.topBarState = this.defaultTopBar;
     }
 
-    editClip(clip: Clip) {
-        this.topBarState = { title: `Edit Clip: ${clip.title}`, back: () => { this.cancel(); } };
-        this.selectedClip = clip;
+    editClip(clip: Clip, editing: boolean) {
+        if (editing && clip === this.selectedClip) {
+            return;
+        } else if (editing) {
+            this.topBarState = { title: `Edit Clip: ${clip.title}`, back: () => { this.cancel(); } };
+            this.selectedClip = clip;
+        } else {
+            this.cancel();
+        }
     }
 }

@@ -1,7 +1,5 @@
 <app-top-bar [currentState]="topBarState"></app-top-bar>
 
 <div class="clips">
-    <app-clip-card [clip]="clip" (editClip)=editClip(clip) *ngFor="let clip of clips"></app-clip-card>
+    <app-clip-card [clip]="clip" (editing)="editClip(clip, $event)" *ngFor="let clip of clips"></app-clip-card>
 </div>
-
-<app-clip-view *ngIf="selectedClip"></app-clip-view>
