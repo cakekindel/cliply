@@ -28,7 +28,8 @@ export class ButtonComponent implements OnInit {
 
     ngOnInit() { }
 
-    mouseDown() {
+    mouseDown(event: MouseEvent) {
+        event.stopPropagation();
         this.pressed = true;
     }
 
