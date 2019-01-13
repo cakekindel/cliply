@@ -1,0 +1,48 @@
+@import 'colors.scss';
+
+.top-bar {
+    position: relative;
+    width: 100%;
+    top: 0;
+    height: 96px;
+    background-color: $color-primary;
+    margin-bottom: 24px;
+
+    .title {
+        position: absolute;
+        top: 24px;
+        left: 72px;
+        font-size: 24px;
+    }
+
+    ::ng-deep .action-items {
+        display: flex;
+        position: absolute;
+        top: 18px;
+        right: 0;
+        flex-direction: row-reverse;
+        margin-right: 16px;
+        height: 24px;
+
+        i {
+            margin-left: 18px;
+            height: 36px;
+            width: 36px;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+    
+    ::ng-deep .fabs {
+        top: 72px;
+        display: flex;
+        position: absolute;
+
+        app-extended-fab {
+            margin-left: 15px;
+        }
+    }
+}

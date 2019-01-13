@@ -29,6 +29,7 @@ import { SplashComponent } from './splash/splash.component';
 import { ChipComponent } from './shared/chip/chip.component';
 import { VideoCardComponent } from './shared/video-card/video-card.component';
 import { ButtonComponent } from './shared/button/button.component';
+import { TopBarComponent } from './shared/top-bar/top-bar.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,7 +47,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         SplashComponent,
         ChipComponent,
         VideoCardComponent,
-        ButtonComponent
+        ButtonComponent,
+        TopBarComponent,
     ],
     imports: [
         BrowserModule,
