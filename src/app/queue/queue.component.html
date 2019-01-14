@@ -2,4 +2,5 @@
 
 <div class="clips">
     <app-clip-card [clip]="clip" (editing)="editClip(clip, $event)" *ngFor="let clip of clips"></app-clip-card>
+    <div class="editing-overlay" *ngIf="selectedClip" (click)="cancel()"></div>
 </div>

@@ -9,6 +9,8 @@ import { FabTypes } from '../shared/extended-fab/extended-fab.component';
     styleUrls: ['./queue.component.scss']
 })
 export class QueueComponent implements OnInit {
+    private cancelCb: () => void;
+
     private defaultTopBar: TopBarState = {
         title: 'Clip Queue',
         actionItems: [
@@ -39,16 +41,12 @@ export class QueueComponent implements OnInit {
     cancel() {
         this.selectedClip = null;
         this.topBarState = this.defaultTopBar;
+        this.cancelCb();
     }
 
-    editClip(clip: Clip, editing: boolean) {
-        if (editing && clip === this.selectedClip) {
-            return;
-        } else if (editing) {
-            this.topBarState = { title: `Edit Clip: ${clip.title}`, back: () => { this.cancel(); } };
-            this.selectedClip = clip;
-        } else {
-            this.cancel();
-        }
+    editClip(clip: Clip, cancelCb: () => {}) {
+        this.cancelCb = cancelCb;
+        this.topBarState = { title: `Edit Clip: ${clip.title}`, back: () => { this.cancel(); } };
+        this.selectedClip = clip;
     }
 }

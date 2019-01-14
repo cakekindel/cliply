@@ -1,13 +1,38 @@
-@import 'animations.scss';
-
 :host {
     width: 100%;
-    position: relative;
-
+    
     .clips {
         display: flex;
+        position: relative;
         flex-wrap: wrap;
         padding: 16px;
+        height: 100%;
+        
+        .editing-overlay {
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: black;
+            animation: overlay-fade-in 0.2s ease-in-out;
+            animation-fill-mode: forwards;
+
+            &.fade-out {
+                animation: overlay-fade-out 0.2s ease-in-out;
+                animation-fill-mode: forwards;
+            }
+
+            @keyframes overlay-fade-in {
+                from { opacity: 0; }
+                to { opacity: 0.6; }
+            }
+            @keyframes overlay-fade-out {
+                from { opacity: 0.6; }
+                to { opacity: 0; }
+            }
+        }
 
         app-clip-card {
             margin-right: 16px;
