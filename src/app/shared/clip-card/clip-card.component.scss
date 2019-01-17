@@ -1,6 +1,5 @@
 @import 'colors.scss';
 @import 'fonts.scss';
-@import 'animations.scss';
 
 .clip-card-container {
     width: 344px;
@@ -12,11 +11,8 @@
     z-index: 1000;
     position: absolute;
     background: $color-primary;
-    transition: width 0.2s,
-                height 0.2s,
-                top 0.4s,
-                left 0.4s,
-                margin-left 0.4s;
+    transition-property: width, height, top, left, margin-left;
+    transition-duration: 0.3s;
     transition-timing-function: ease;
 
     margin-left: 0;
@@ -27,7 +23,7 @@
         top: 16px !important;
         left: 50% !important;
         margin-left: -400px;
-        width: 1000px;
+        width: 800px;
         height: 1200px;
     }
 
