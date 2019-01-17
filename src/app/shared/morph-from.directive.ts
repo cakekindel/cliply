@@ -1,5 +1,5 @@
-import { Directive, Input, ElementRef } from '@angular/core';
-import { interval, timer } from 'rxjs';
+import { Directive, Input, ElementRef, Renderer2 } from '@angular/core';
+import { timer } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 
 @Directive({
@@ -8,17 +8,17 @@ import { takeWhile } from 'rxjs/operators';
 export class MorphFromDirective {
     private morphed = false;
     private readonly fadeDuration = 200;
-    private srcElementRef: ElementRef<HTMLElement>;
+    private destElement: HTMLElement;
 
-    @Input('morphFrom') set srcElement(nativeElement: HTMLElement) {
-        this.srcElementRef = new ElementRef<HTMLElement>(nativeElement);
-    }
+    @Input('morphFrom') srcElement: HTMLElement;
     @Input() set morph(shouldMorph: boolean) {
         this.morphHandler(shouldMorph);
     }
 
-    constructor(private destElementRef: ElementRef<HTMLElement>) {
-        destElementRef.nativeElement.classList.add('morph-hidden');
+    constructor(private renderer: Renderer2, destElementRef: ElementRef<HTMLElement>) {
+        this.destElement = destElementRef.nativeElement;
+
+        this.renderer.addClass(this.destElement, 'morph-hidden');
 
         timer(1500).subscribe(() => this.morphHandler(true));
         timer(3500).subscribe(() => this.morphHandler(false));
@@ -41,7 +41,7 @@ export class MorphFromDirective {
             step => {
                 switch (step) {
                     case 1:
-                        this.fadeOutContents(this.destElementRef);
+                        this.fadeOutContents(this.destElement);
                         break;
                     case 2:
                         // move destelement back
@@ -52,12 +52,12 @@ export class MorphFromDirective {
                         break;
                     case 4:
                         // show srcelement and fade destelement out
-                        this.srcElementRef.nativeElement.classList.remove('morph-hidden');
-                        this.destElementRef.nativeElement.classList.add('fade-out-fast');
+                        this.renderer.removeClass(this.srcElement, 'morph-hidden');
+                        this.renderer.addClass(this.destElement, 'fade-out-fast');
 
                         break;
                     case 5:
-                        this.fadeInContents(this.srcElementRef);
+                        this.fadeInContents(this.srcElement);
                         break;
                 }
             }
@@ -72,34 +72,34 @@ export class MorphFromDirective {
                 switch (step) {
                     case 1:
                         // set contents hidden so it's just the bg that fades in
-                        this.setContentsHidden(this.destElementRef);
+                        this.setContentsHidden(this.destElement);
                         // set to be identical to srcelement
                         this.setDestElementStylesToSrcElement();
                         // fade in
-                        this.fadeOutContents(this.srcElementRef);
-                        this.destElementRef.nativeElement.classList.add('fade-in-fast');
+                        this.fadeOutContents(this.srcElement);
+                        this.renderer.addClass(this.destElement, 'fade-in-fast');
                         break;
                     case 2:
                         // hide src and set dest to transition
-                        this.srcElementRef.nativeElement.classList.add('morph-hidden');
-                        this.destElementRef.nativeElement.classList.add('morphable');
+                        this.renderer.addClass(this.srcElement, 'morph-hidden');
+                        this.renderer.addClass(this.destElement, 'morphable');
 
                         // move destelement to where it goes
-                        this.destElementRef.nativeElement.removeAttribute('style');
+                        this.renderer.removeAttribute(this.destElement, 'style');
 
                         // cleanup classes
-                        this.destElementRef.nativeElement.classList.remove('fade-in-fast');
-                        this.destElementRef.nativeElement.classList.remove('morph-hidden');
+                        this.renderer.removeClass(this.destElement, 'fade-in-fast');
+                        this.renderer.removeClass(this.destElement, 'morph-hidden');
                         break;
                     case 3:
                         // do nothing; transition lasts 400ms, 2 steps
                         break;
                     case 4:
-                        this.fadeInContents(this.destElementRef);
+                        this.fadeInContents(this.destElement);
                         break;
                     case 5:
                         // cleanup
-                        this.resetContents(this.destElementRef);
+                        this.resetContents(this.destElement);
                         break;
                 }
             }
@@ -107,49 +107,50 @@ export class MorphFromDirective {
     }
 
     private setDestElementStylesToSrcElement() {
-        this.destElementRef.nativeElement.setAttribute(
+        this.renderer.setAttribute(
+            this.destElement,
             'style',
-            `left: ${this.srcElementRef.nativeElement.offsetLeft}px;
-            top: ${this.srcElementRef.nativeElement.offsetTop}px;
-            width: ${this.srcElementRef.nativeElement.offsetWidth}px;
-            height: ${this.srcElementRef.nativeElement.offsetHeight}px;`
+            `left: ${this.srcElement.offsetLeft}px;
+            top: ${this.srcElement.offsetTop}px;
+            width: ${this.srcElement.offsetWidth}px;
+            height: ${this.srcElement.offsetHeight}px;`
         );
     }
 
-    setContentsHidden(el: ElementRef<HTMLElement>) {
-        const children = Array.from(el.nativeElement.children);
+    setContentsHidden(el: HTMLElement) {
+        const children = Array.from(el.children);
 
         // fade out contents while leaving background
         children.forEach(child => {
-            child.classList.add('morph-hidden');
+            this.renderer.addClass(child, 'morph-hidden');
         });
     }
-    resetContents(el: ElementRef<HTMLElement>) {
-        const children = Array.from(el.nativeElement.children);
+    resetContents(el: HTMLElement) {
+        const children = Array.from(el.children);
 
         // fade out contents while leaving background
         children.forEach(child => {
-            child.classList.remove('morph-hidden');
-            child.classList.remove('fade-in-fast');
-            child.classList.remove('fade-out-fast');
+            this.renderer.removeClass(child, 'morph-hidden');
+            this.renderer.removeClass(child, 'fade-in-fast');
+            this.renderer.removeClass(child, 'fade-out-fast');
         });
     }
-    fadeOutContents(el: ElementRef<HTMLElement>) {
-        const children = Array.from(el.nativeElement.children);
+    fadeOutContents(el: HTMLElement) {
+        const children = Array.from(el.children);
 
         // fade out contents while leaving background
         children.forEach(child => {
-            child.classList.remove('fade-in-fast');
-            child.classList.add('fade-out-fast');
+            this.renderer.removeClass(child, 'fade-in-fast');
+            this.renderer.addClass(child, 'fade-out-fast');
         });
     }
-    fadeInContents(el: ElementRef<HTMLElement>) {
-        const children = Array.from(el.nativeElement.children);
+    fadeInContents(el: HTMLElement) {
+        const children = Array.from(el.children);
 
         // fade in contents while leaving background
         children.forEach(child => {
-            child.classList.remove('fade-out-fast');
-            child.classList.add('fade-in-fast');
+            this.renderer.removeClass(child, 'fade-out-fast');
+            this.renderer.addClass(child, 'fade-in-fast');
         });
     }
 }
