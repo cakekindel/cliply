@@ -31,6 +31,7 @@ import { ClipCardComponent } from './shared/clip-card/clip-card.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { MorphFromDirective } from './shared/morph-from.directive';
+import { EditClipComponent } from './shared/clip-card/edit-clip/edit-clip.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         ButtonComponent,
         TopBarComponent,
         MorphFromDirective,
+        EditClipComponent,
     ],
     imports: [
         BrowserModule,

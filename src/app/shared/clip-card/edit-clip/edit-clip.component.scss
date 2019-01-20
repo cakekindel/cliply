@@ -1,0 +1,9 @@
+@import 'colors.scss';
+
+:host {
+    border-radius: 4px;
+    display: flex;
+    background: $color-primary;
+    width: 800px;
+    height: 1000px;
+}
