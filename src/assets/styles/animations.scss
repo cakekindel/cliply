@@ -2,19 +2,18 @@
     from { opacity: 0; }
     to { opacity: 1; }
 }
-
 @keyframes fade-out {
     from { opacity: 1; }
     to { opacity: 0; }
 }
 
-@mixin fade-out($duration: 0.5s) {
-    animation: fade-out $duration ease-in-out;
+@mixin fade-out($duration: 0.4s) {
+    animation: fade-out $duration ease;
     animation-fill-mode: forwards;    
 }
 
-@mixin fade-in($duration: 0.5s) {
-    animation: fade-in $duration ease-in-out;
+@mixin fade-in($duration: 0.4s) {
+    animation: fade-in $duration ease;
     animation-fill-mode: forwards;
 }
 
@@ -30,4 +29,22 @@
 }
 .fade-out-fast {
     @include fade-out(0.2s);
+}
+
+@keyframes scrim-fade-in {
+    from { background-color: rgba(black, 0); }
+    to { background-color: rgba(black, 0.5); }
+}
+@keyframes scrim-fade-out {
+    from { background-color: rgba(black, 0.5); }
+    to { background-color: rgba(black, 0); }
+}
+
+.scrim-fade-in {
+    animation: scrim-fade-in 0.4s ease;
+    animation-fill-mode: forwards;
+}
+.scrim-fade-out {
+    animation: scrim-fade-out 0.4s ease;
+    animation-fill-mode: forwards;
 }
