@@ -1,34 +1,25 @@
-<div class="clip-card-container">
-    <div class="clip-edit-card mat-elevation-z8 fade-in-fast" 
-         [style.top]="clipCardTop + 'px'"
-         [style.left]="clipCardLeft + 'px'"
-         [class.expand]="expandEditCard"
-         [class.fade-out-fast]="fadeOutEditCard"
-         *ngIf="fadeOutEditCard || isEditing">
-        <div class="edit-contents fade-in-fast" [class.fade-in-fast]="expandEditCard">
-            test!
-        </div>
+<div class="clip-card mat-ripple mat-elevation-z1"
+     (click)="editClip()"
+     #clip_card
+     matRipple>
+    <div class="title-container">
+        <h6 class="title">{{clip.title}}</h6>
+        <span class="sub-title">
+            {{clip.duration}} &bull; {{clip.fileMetadata.sizeMb}}MB &bull;
+            <img class="youtube-logo" src="../../../assets/images/youtube_logo_light.svg" matTooltip="Will be uploaded to YouTube" *ngIf="clip.uploadToYoutube">
+        </span>
     </div>
-    <div class="clip-card mat-ripple mat-elevation-z1"
-         [class.fade-out-fast]="isEditing"
-         (click)="editClip()"
-         #clip_card
-         matRipple>
-        <div class="title-container">
-            <h6 class="title">{{clip.title}}</h6>
-            <span class="sub-title">
-                {{clip.duration}} &bull; {{clip.fileMetadata.sizeMb}}MB &bull;
-                <img class="youtube-logo" src="../../../assets/images/youtube_logo_light.svg" matTooltip="Will be uploaded to YouTube" *ngIf="clip.uploadToYoutube">
-            </span>
-        </div>
-        <video class="thumbnail"
-            src="../../../assets/demo_clip.mp4"
-            (mouseover)="thumbnailMouseover()"
-            (mouseleave)="thumbnailMouseleave()"
-            #clip_thumbnail>
-        </video>
-        <div class="buttons">
-            <app-button text *ngIf="!clip.exported">EXPORT</app-button>
-        </div>
+    <video class="thumbnail"
+           src="../../../assets/demo_clip.mp4"
+           (mouseover)="thumbnailMouseover()"
+           (mouseleave)="thumbnailMouseleave()"
+           #clip_thumbnail>
+    </video>
+    <div class="buttons">
+        <app-button text *ngIf="!clip.exported">EXPORT</app-button>
     </div>
+</div>
+
+<div class="edit-clip-scrim scrim-fade-in" [class.scrim-fade-out]="!showEdit" (click)="closeEdit()" *ngIf="renderEdit">
+    <app-edit-clip [morphFrom]="clip_card" [morph]="showEdit"></app-edit-clip>
 </div>

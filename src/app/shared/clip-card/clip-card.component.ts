@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Clip } from '../models/clip.model';
 import { timer } from 'rxjs';
+import { MORPH_DURATION_MS } from '../morph-from.directive';
 
 @Component({
     selector: 'app-clip-card',
@@ -8,41 +9,35 @@ import { timer } from 'rxjs';
     styleUrls: ['./clip-card.component.scss']
 })
 export class ClipCardComponent implements OnInit {
-    isEditing = false;
-    expandEditCard = false;
-    fadeOutEditCard = false;
-    clipCardTop: number;
-    clipCardLeft: number;
+    renderEdit = false;
+    showEdit = false;
+    showEditScrim = false;
 
     @Input() clip: Clip;
     @Output() editing = new EventEmitter<() => void>();
 
     @ViewChild('clip_thumbnail') clipThumbElement: ElementRef<HTMLVideoElement>;
-    @ViewChild('clip_card') clipCard: ElementRef<HTMLDivElement>;
 
     constructor() { }
 
     ngOnInit() { }
 
     editClip() {
-        this.clipCardTop = this.clipCard.nativeElement.offsetTop;
-        this.clipCardLeft = this.clipCard.nativeElement.offsetLeft;
-
-        this.isEditing = true;
-        this.editing.next(() => { this.cancelEdit(); });
-        timer(200).subscribe(() => {
-            this.expandEditCard = true;
-        });
+        this.renderEdit = true;
+        this.showEdit = true;
+        this.showEditScrim = true;
+        this.editing.emit(() => { this.closeEdit(); });
     }
 
-    cancelEdit() {
-        this.expandEditCard = false;
-        timer(400).subscribe(() => {
-            this.fadeOutEditCard = true;
-            this.isEditing = false;
+    closeEdit() {
+        this.showEdit = false;
+
+        timer(MORPH_DURATION_MS).subscribe(() => {
+            this.showEditScrim = false;
         });
-        timer(600).subscribe(() => {
-            this.fadeOutEditCard = false;
+
+        timer(MORPH_DURATION_MS + 200).subscribe(() => {
+            this.renderEdit = false;
         });
     }
 
