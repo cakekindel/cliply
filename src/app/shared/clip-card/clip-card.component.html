@@ -1,5 +1,5 @@
 <div class="clip-card mat-ripple mat-elevation-z1"
-     (click)="editClip()"
+     (click)="editClipService.editClip(clip)"
      #clip_card
      matRipple>
     <div class="title-container">
@@ -20,6 +20,9 @@
     </div>
 </div>
 
-<div class="edit-clip-scrim scrim-fade-in" [class.scrim-fade-out]="!showEdit" (click)="closeEdit()" *ngIf="renderEdit">
-    <app-edit-clip [morphFrom]="clip_card" [morph]="showEdit"></app-edit-clip>
+<div class="edit-clip-scrim scrim-fade-in"
+     [class.scrim-fade-out]="!editClipService.showEdit"
+     (click)="editClipService.closeEdit()"
+     *ngIf="editClipService.renderEdit && editClipService.selectedClip === clip">
+    <app-edit-clip [morphFrom]="clip_card" [morph]="editClipService.showEdit"></app-edit-clip>
 </div>
