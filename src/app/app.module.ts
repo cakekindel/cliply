@@ -7,9 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { MatRippleModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -32,6 +37,7 @@ import { ButtonComponent } from './shared/button/button.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { MorphFromDirective } from './shared/morph-from.directive';
 import { EditClipComponent } from './shared/clip-card/edit-clip/edit-clip.component';
+import { EditClipService } from './shared/clip-card/edit-clip.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -61,6 +67,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule,
         MatRippleModule,
         MatTooltipModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatRadioModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot({
             loader: {
@@ -72,7 +81,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
     providers: [
         ElectronService,
-        NavigationService
+        NavigationService,
+        EditClipService
     ],
     bootstrap: [AppComponent]
 })
