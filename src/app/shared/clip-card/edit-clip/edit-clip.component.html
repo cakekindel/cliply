@@ -1,1 +1,16 @@
-<h4>i've got some content, yo!</h4>
+<form>
+    <mat-form-field>
+        <mat-label>Clip Title</mat-label>
+        <input name="clip-title" [(ngModel)]="clip.title" matInput>
+    </mat-form-field>
+    <div class="youtube-info">
+        <mat-checkbox name="upload-to-youtube" [(ngModel)]="clip.uploadToYoutube">Upload to YouTube</mat-checkbox>
+        <mat-radio-group class="fade-in-fast" name="youtube-privacy" [(ngModel)]="clip.youtubeMetadata.privacy" *ngIf="clip.uploadToYoutube">
+            <mat-radio-button [value]="privacy" *ngFor="let privacy of youtubePrivacies">{{privacy}}</mat-radio-button>
+        </mat-radio-group>
+    </div>
+</form>
+<div class="buttons">
+    <app-button outlined (clicked)="editClipService.closeEdit()">CANCEL</app-button>
+    <app-button primary>SAVE</app-button>
+</div>

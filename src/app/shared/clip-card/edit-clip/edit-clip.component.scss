@@ -2,8 +2,44 @@
 
 :host {
     border-radius: 4px;
+    padding: 24px;
     display: flex;
+    flex-direction: column;
     background: $color-primary;
     width: 800px;
     height: 1000px;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        mat-form-field {
+            width: 100%;
+        }
+
+        .youtube-info {
+            display: flex;
+            align-items: center;
+
+            mat-checkbox {
+                margin-right: 16px;
+            }
+
+            mat-radio-button {
+                margin-left: 16px;
+            }
+        }
+    }
+
+    .buttons {
+        display: flex;
+        position: absolute;
+        bottom: 24px;
+        align-self: flex-end;
+
+        app-button {
+            margin-left: 16px;
+        }
+    }
 }
