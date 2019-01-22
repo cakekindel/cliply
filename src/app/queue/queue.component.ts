@@ -2,15 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Clip } from '../shared/models/clip.model';
 import { TopBarState } from '../shared/top-bar/top-bar.component';
 import { FabTypes } from '../shared/extended-fab/extended-fab.component';
+import { EditClipService } from '../shared/clip-card/edit-clip.service';
 
 @Component({
     selector: 'app-queue',
     templateUrl: './queue.component.html',
     styleUrls: ['./queue.component.scss']
 })
-export class QueueComponent implements OnInit {
-    private cancelCb: () => void;
-
+export class QueueComponent {
     private defaultTopBar: TopBarState = {
         title: 'Clip Queue',
         actionItems: [
@@ -18,35 +17,51 @@ export class QueueComponent implements OnInit {
             { icon: 'folder_open', tooltipText: 'Add All Clips From Folder', click: () => { } },
         ],
         fabs: [
-            { icon: 'add', type: FabTypes.Primary, label: 'ADD CLIP(S)', click: () => { } },
+            {
+                icon: 'add',
+                type: FabTypes.Primary,
+                label: 'ADD CLIP(S)',
+                click: () => { },
+                file: { accept: 'video/mp4', multiple: true },
+                filesChosen: (files) => { }
+            },
             { icon: 'play_arrow', type: FabTypes.Secondary, label: 'EXPORT ALL CLIPS', click: () => { } },
         ]
     };
 
     public topBarState = this.defaultTopBar;
 
-    public testClip = new Clip();
-    public clips: Clip[] = [this.testClip, this.testClip, this.testClip, this.testClip, this.testClip];
-    public selectedClip: Clip;
+    public _testClip = new Clip();
+    public clips: Clip[];
 
-    constructor() {
-        this.testClip.fileMetadata.durationMs = 593000;
-        this.testClip.fileMetadata.sizeMb = 12.4;
-        this.testClip.title = 'My Video';
-        this.testClip.uploadToYoutube = true;
+    constructor(private editClipService: EditClipService) {
+        this.editClipService.editingClip$.subscribe(editing => this.editingClip(editing));
+
+        this._testClip.fileMetadata.durationMs = 593000;
+        this._testClip.fileMetadata.sizeMb = 12.4;
+        this._testClip.title = 'My Video';
+        this._testClip.uploadToYoutube = true;
+
+        this.clips = [
+            this._copyOfTestClip(),
+            this._copyOfTestClip(),
+            this._copyOfTestClip(),
+            this._copyOfTestClip(),
+            this._copyOfTestClip(),
+            this._copyOfTestClip()
+        ];
     }
 
-    ngOnInit() { }
-
-    cancel() {
-        this.selectedClip = null;
-        this.topBarState = this.defaultTopBar;
-        this.cancelCb();
+    editingClip(editing: boolean) {
+        if (editing) {
+            this.topBarState = {
+                title: `Edit Clip: ${this.editClipService.selectedClip.title}`,
+                back: () => { this.editClipService.closeEdit(); }
+            };
+        } else {
+            this.topBarState = this.defaultTopBar;
+        }
     }
 
-    editClip(clip: Clip, cancelCb: () => {}) {
-        this.cancelCb = cancelCb;
-        this.topBarState = { title: `Edit Clip: ${clip.title}`, back: () => { this.cancel(); } };
-        this.selectedClip = clip;
-    }
+    private _copyOfTestClip() { return JSON.parse(JSON.stringify(this._testClip)); }
 }
