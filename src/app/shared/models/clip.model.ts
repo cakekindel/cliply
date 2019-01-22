@@ -4,6 +4,7 @@ export class Clip {
     title: string;
     exported = false;
     uploadToYoutube = false;
+    youtubeMetadata = new YouTubeMetadata();
     fileMetadata = new ClipMetadata();
 
     get duration() {
@@ -24,4 +25,17 @@ class ClipMetadata {
     sizeMb: number;
     durationMs: number;
     startAtMs: number;
+}
+
+class YouTubeMetadata {
+    url?: string;
+    privacy = YouTubePrivacy.Unlisted;
+}
+
+export class YouTubePrivacy {
+    static Public = 'Public';
+    static Private = 'Private';
+    static Unlisted = 'Unlisted';
+
+    static enum = [YouTubePrivacy.Public, YouTubePrivacy.Private, YouTubePrivacy.Unlisted];
 }
