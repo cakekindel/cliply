@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
     selector: 'app-extended-fab',
@@ -9,6 +9,7 @@ export class ExtendedFabComponent implements OnInit {
     pressed = false;
 
     @Input() model: ExtendedFab;
+    @ViewChild('file') fileInput: ElementRef<HTMLInputElement>;
 
     constructor() { }
 
@@ -20,6 +21,15 @@ export class ExtendedFabComponent implements OnInit {
 
     mouseUp() {
         this.pressed = false;
+        this.model.click();
+
+        if (this.fileInput) {
+            this.fileInput.nativeElement.click();
+        }
+    }
+
+    filesChosen(files: FileList) {
+        this.model.filesChosen(files);
     }
 }
 
@@ -28,6 +38,8 @@ export interface ExtendedFab {
     icon: string;
     type: FabType;
     click: () => void;
+    file?: FileOptions;
+    filesChosen?: (files: FileList) => void;
 }
 
 export const FabTypes = {
@@ -38,4 +50,9 @@ export const FabTypes = {
 interface FabType {
     className: string;
     rippleColor: string;
+}
+
+interface FileOptions {
+    accept: string;
+    multiple: boolean;
 }

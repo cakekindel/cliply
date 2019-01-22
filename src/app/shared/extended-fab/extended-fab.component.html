@@ -8,4 +8,11 @@
 
     <i class="material-icons">{{model.icon}}</i>
     <span>{{model.label}}</span>
+    <input type="file"
+           *ngIf="model.file"
+           style="display: none;"
+           [attr.multiple]="model.file.multiple"
+           [accept]="model.file.accept"
+           (change)="filesChosen($event.target.files)"
+           #file>
 </div>
