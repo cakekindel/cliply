@@ -4,6 +4,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../environments/environment';
 import { Router } from '@angular/router';
 import { NavigationService } from './nav-drawer/navigation.service';
+import { SettingsService } from './shared/user-data/settings.service';
+import { ClipStorageService } from './shared/user-data/clip-storage.service';
+import { LocalFileServer } from './local-file-server.service';
 
 @Component({
     selector: 'app-root',
@@ -15,8 +18,13 @@ export class AppComponent {
         electronService: ElectronService,
         translate: TranslateService,
         router: Router,
-        navSvc: NavigationService
+        navSvc: NavigationService,
+        settingsService: SettingsService,
+        clipsStorage: ClipStorageService,
+        localFiles: LocalFileServer
     ) {
+        localFiles.serve();
+
         translate.setDefaultLang('en');
         console.log('AppConfig', AppConfig);
         router.navigateByUrl('splash');

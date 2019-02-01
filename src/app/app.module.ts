@@ -38,6 +38,9 @@ import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { MorphFromDirective } from './shared/morph-from.directive';
 import { EditClipComponent } from './shared/clip-card/edit-clip/edit-clip.component';
 import { EditClipService } from './shared/clip-card/edit-clip.service';
+import { SettingsService } from './shared/user-data/settings.service';
+import { ClipStorageService } from './shared/user-data/clip-storage.service';
+import { LocalFileServer } from './local-file-server.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -82,7 +85,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     providers: [
         ElectronService,
         NavigationService,
-        EditClipService
+        EditClipService,
+        ClipStorageService,
+        SettingsService,
+        LocalFileServer
     ],
     bootstrap: [AppComponent]
 })
