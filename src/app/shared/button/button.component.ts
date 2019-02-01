@@ -21,7 +21,7 @@ export class ButtonComponent implements OnInit {
     @Input() set outlined(val: string) { this.type = this.buttonTypes.outlined; }
     @Input() set text(val: string) { this.type = this.buttonTypes.text; }
 
-    @Input() icon: string;
+    @Input() icon?: string;
     @Output() clicked = new EventEmitter<void>();
 
     constructor() { }

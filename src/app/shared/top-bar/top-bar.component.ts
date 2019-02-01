@@ -8,13 +8,16 @@ import { timer } from 'rxjs';
     styleUrls: ['./top-bar.component.scss']
 })
 export class TopBarComponent implements OnInit {
-    state: TopBarState;
+    state?: TopBarState;
     fadeOutItems = false;
     fadeInItems = false;
     hasFabs = false;
 
     @Input() set currentState(state: TopBarState) {
-        this.hasFabs = state.fabs && state.fabs.length > 0;
+        if (state.fabs && state.fabs.length > 0) {
+            this.hasFabs = true;
+        }
+
         if (this.state) {
             this.transitionToState(state);
         } else {

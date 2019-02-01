@@ -8,7 +8,7 @@ import { EditClipService } from '../edit-clip.service';
     styleUrls: ['./edit-clip.component.scss']
 })
 export class EditClipComponent {
-    clip: Clip;
+    clip?: Clip;
     youtubePrivacies = YouTubePrivacy.enum;
 
     constructor(private editClipService: EditClipService) {

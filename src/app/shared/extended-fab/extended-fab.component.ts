@@ -8,8 +8,8 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 export class ExtendedFabComponent implements OnInit {
     pressed = false;
 
-    @Input() model: ExtendedFab;
-    @ViewChild('file') fileInput: ElementRef<HTMLInputElement>;
+    @Input() model?: ExtendedFab;
+    @ViewChild('file') fileInput?: ElementRef<HTMLInputElement>;
 
     constructor() { }
 
@@ -20,16 +20,20 @@ export class ExtendedFabComponent implements OnInit {
     }
 
     mouseUp() {
-        this.pressed = false;
-        this.model.click();
+        if (this.model) {
+            this.pressed = false;
+            this.model.click();
 
-        if (this.fileInput) {
-            this.fileInput.nativeElement.click();
+            if (this.fileInput) {
+                this.fileInput.nativeElement.click();
+            }
         }
     }
 
     filesChosen(files: FileList) {
-        this.model.filesChosen(files);
+        if (this.model && this.model.filesChosen) {
+            this.model.filesChosen(files);
+        }
     }
 }
 

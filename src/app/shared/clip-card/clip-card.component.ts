@@ -10,21 +10,25 @@ import { EditClipService } from './edit-clip.service';
     styleUrls: ['./clip-card.component.scss']
 })
 export class ClipCardComponent implements OnInit {
-    @Input() clip: Clip;
+    @Input() clip?: Clip;
 
-    @ViewChild('clip_thumbnail') clipThumbElement: ElementRef<HTMLVideoElement>;
+    @ViewChild('clip_thumbnail') clipThumbElement?: ElementRef<HTMLVideoElement>;
 
     constructor(public editClipService: EditClipService) { }
 
     ngOnInit() { }
 
     thumbnailMouseover() {
-        this.clipThumbElement.nativeElement.muted = true;
-        this.clipThumbElement.nativeElement.play();
+        if (this.clipThumbElement) {
+            this.clipThumbElement.nativeElement.muted = true;
+            this.clipThumbElement.nativeElement.play();
+        }
     }
 
     thumbnailMouseleave() {
-        this.clipThumbElement.nativeElement.pause();
-        this.clipThumbElement.nativeElement.currentTime = 0;
+        if (this.clipThumbElement) {
+            this.clipThumbElement.nativeElement.pause();
+            this.clipThumbElement.nativeElement.currentTime = 0;
+        }
     }
 }

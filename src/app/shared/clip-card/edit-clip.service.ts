@@ -7,14 +7,14 @@ import { MORPH_DURATION_MS } from '../morph-from.directive';
 export class EditClipService {
     public editingClip$ = new Subject<boolean>();
 
-    selectedClip: Clip;
+    selectedClip?: Clip;
 
     renderEdit = false;
     showEdit = false;
     showEditScrim = false;
 
-    private renderEditTimer: Subscription;
-    private showEditScrimTimer: Subscription;
+    private renderEditTimer?: Subscription;
+    private showEditScrimTimer?: Subscription;
 
     constructor() { }
 
@@ -26,7 +26,7 @@ export class EditClipService {
         if (this.showEditScrimTimer && !this.showEditScrimTimer.closed) {
             this.showEditScrimTimer.unsubscribe();
         }
-        if (this.showEditScrimTimer && !this.renderEditTimer.closed) {
+        if (this.showEditScrimTimer && this.renderEditTimer && !this.renderEditTimer.closed) {
             this.renderEditTimer.unsubscribe();
         }
 

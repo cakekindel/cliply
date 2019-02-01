@@ -9,9 +9,9 @@ export class MorphFromDirective {
     private morphed = false;
     private readonly fadeDuration = 200;
     private destElement: HTMLElement;
-    private destElementAttrs: { top: number, left: number, width: number, height: number };
+    private destElementAttrs?: { top: number, left: number, width: number, height: number };
 
-    @Input('morphFrom') srcElement: HTMLElement;
+    @Input('morphFrom') srcElement?: HTMLElement;
     @Input() set morph(shouldMorph: boolean) {
         this.morphHandler(shouldMorph);
     }
@@ -51,7 +51,9 @@ export class MorphFromDirective {
                         // set to be identical to srcelement
                         this.setDestElementStylesToSrcElement();
                         // fade in
-                        this.fadeOutContents(this.srcElement);
+                        if (this.srcElement) {
+                            this.fadeOutContents(this.srcElement);
+                        }
                         this.renderer.addClass(this.destElement, 'fade-in-fast');
                         break;
                     case 1:
@@ -71,7 +73,7 @@ export class MorphFromDirective {
                         break;
                     case 3:
                         // cleanup
-                        this.resetContents(this.destElement);
+                        this.resetElement(this.destElement);
                         break;
                 }
             }
@@ -97,7 +99,9 @@ export class MorphFromDirective {
                         this.renderer.addClass(this.destElement, 'fade-out-fast');
                         break;
                     case 3:
-                        this.fadeInContents(this.srcElement);
+                        if (this.srcElement) {
+                            this.fadeInContents(this.srcElement);
+                        }
                         break;
                 }
             }
@@ -105,26 +109,30 @@ export class MorphFromDirective {
     }
 
     private setDestElementStylesToSrcElement() {
-        this.renderer.setAttribute(
-            this.destElement,
-            'style',
-            `position: absolute;
-            left: ${this.srcElement.offsetLeft}px;
-            top: ${this.srcElement.offsetTop}px;
-            width: ${this.srcElement.offsetWidth}px;
-            height: ${this.srcElement.offsetHeight}px;`
-        );
+        if (this.srcElement) {
+            this.renderer.setAttribute(
+                this.destElement,
+                'style',
+                `position: absolute;
+                left: ${this.srcElement.offsetLeft}px;
+                top: ${this.srcElement.offsetTop}px;
+                width: ${this.srcElement.offsetWidth}px;
+                height: ${this.srcElement.offsetHeight}px;`
+            );
+        }
     }
     private setDestElementStyles() {
-        this.renderer.setAttribute(
-            this.destElement,
-            'style',
-            `position: absolute;
-            left: ${this.destElementAttrs.left}px;
-            top: ${this.destElementAttrs.top}px;
-            width: ${this.destElementAttrs.width}px;
-            height: ${this.destElementAttrs.height}px;`
-        );
+        if (this.destElementAttrs) {
+            this.renderer.setAttribute(
+                this.destElement,
+                'style',
+                `position: absolute;
+                left: ${this.destElementAttrs.left}px;
+                top: ${this.destElementAttrs.top}px;
+                width: ${this.destElementAttrs.width}px;
+                height: ${this.destElementAttrs.height}px;`
+            );
+        }
     }
 
     private setContentsHidden(el: HTMLElement) {
@@ -135,14 +143,16 @@ export class MorphFromDirective {
             this.renderer.addClass(child, 'morph-hidden');
         });
     }
-    private resetContents(el: HTMLElement) {
+    private resetElement(el: HTMLElement) {
+        const classesToRemove = ['morph-hidden', 'fade-in-fast', 'fade-out-fast'];
+        classesToRemove.forEach((cls) => this.renderer.removeClass(el, cls));
+        this.renderer.removeAttribute(el, 'style');
+
         const children = Array.from(el.children);
 
         // fade out contents while leaving background
         children.forEach(child => {
-            this.renderer.removeClass(child, 'morph-hidden');
-            this.renderer.removeClass(child, 'fade-in-fast');
-            this.renderer.removeClass(child, 'fade-out-fast');
+            classesToRemove.forEach((cls) => this.renderer.removeClass(child, cls));
         });
     }
     private fadeOutContents(el: HTMLElement) {
