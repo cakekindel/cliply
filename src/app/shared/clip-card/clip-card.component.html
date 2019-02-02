@@ -5,12 +5,12 @@
     <div class="title-container">
         <h6 class="title">{{clip.title}}</h6>
         <span class="sub-title">
-            {{clip.duration}} &bull; {{clip.fileMetadata.sizeMb}}MB &bull;
+            {{clip.duration}} &bull; {{clip.file.sizeMb}}MB &bull;
             <img class="youtube-logo" src="../../../assets/images/youtube_logo_light.svg" matTooltip="Will be uploaded to YouTube" *ngIf="clip.uploadToYoutube">
         </span>
     </div>
     <video class="thumbnail"
-           src="../../../assets/demo_clip.mp4"
+           src="{{clip.file.url}}"
            (mouseover)="thumbnailMouseover()"
            (mouseleave)="thumbnailMouseleave()"
            #clip_thumbnail>
