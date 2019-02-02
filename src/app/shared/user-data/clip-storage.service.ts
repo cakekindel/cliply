@@ -22,17 +22,12 @@ export class ClipStorageService {
         const files = Array.from(fileList);
         files.forEach((file) => {
             const clip = new Clip();
-            clip.url = this.fileServer.urlFromPath(file.path);
+            clip.file.path = file.path;
+            clip.file.url = this.fileServer.urlFromPath(file.path);
+
             this.clips.queue.push(clip);
         });
 
-        this.save();
-    }
-
-    public newClip(file: File) {
-        const clip = new Clip();
-        clip.url = this.fileServer.urlFromPath(file.path);
-        this.clips.queue.push(clip);
         this.save();
     }
 
