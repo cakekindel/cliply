@@ -1,15 +1,15 @@
 export class Clip {
-    private _durationString: string;
+    private _durationString = '';
 
-    title: string;
+    title = '';
     exported = false;
     uploadToYoutube = false;
     youtubeMetadata = new YouTubeMetadata();
-    fileMetadata = new ClipMetadata();
+    file = new FileInfo();
 
     get duration() {
         if (!this._durationString) {
-            const durationSec = Math.floor(this.fileMetadata.durationMs / 1000);
+            const durationSec = Math.floor(this.file.durationMs / 1000);
             const durationMin = Math.floor(durationSec / 60);
             const leftoverDurationSec = durationSec - durationMin * 60;
 
@@ -20,11 +20,12 @@ export class Clip {
     }
 }
 
-class ClipMetadata {
-    sourceFile: File;
-    sizeMb: number;
-    durationMs: number;
-    startAtMs: number;
+class FileInfo {
+    url = ''; // stream url for safely using in template without disabling webSecurity
+    path = '';
+    sizeMb = 0;
+    durationMs = 0;
+    startAtMs = 0;
 }
 
 class YouTubeMetadata {
