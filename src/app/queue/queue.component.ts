@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Clip } from '../shared/models/clip.model';
 import { TopBarState } from '../shared/top-bar/top-bar.component';
 import { FabTypes } from '../shared/extended-fab/extended-fab.component';
 import { EditClipService } from '../shared/clip-card/edit-clip.service';
+import { ClipStorageService } from '../shared/user-data/clip-storage.service';
 
 @Component({
     selector: 'app-queue',
@@ -23,7 +23,11 @@ export class QueueComponent {
                 label: 'ADD CLIP(S)',
                 click: () => { },
                 file: { accept: 'video/mp4', multiple: true },
-                filesChosen: (files) => { }
+                filesChosen: (files) => {
+                    if (files.length >= 1) {
+                        this.clipStorage.newClips(files);
+                    }
+                }
             },
             { icon: 'play_arrow', type: FabTypes.Secondary, label: 'EXPORT ALL CLIPS', click: () => { } },
         ]
@@ -31,29 +35,12 @@ export class QueueComponent {
 
     public topBarState = this.defaultTopBar;
 
-    public _testClip = new Clip();
-    public clips: Clip[];
-
-    constructor(private editClipService: EditClipService) {
+    constructor(private editClipService: EditClipService, public clipStorage: ClipStorageService) {
         this.editClipService.editingClip$.subscribe(editing => this.editingClip(editing));
-
-        this._testClip.fileMetadata.durationMs = 593000;
-        this._testClip.fileMetadata.sizeMb = 12.4;
-        this._testClip.title = 'My Video';
-        this._testClip.uploadToYoutube = true;
-
-        this.clips = [
-            this._copyOfTestClip(),
-            this._copyOfTestClip(),
-            this._copyOfTestClip(),
-            this._copyOfTestClip(),
-            this._copyOfTestClip(),
-            this._copyOfTestClip()
-        ];
     }
 
     editingClip(editing: boolean) {
-        if (editing) {
+        if (editing && this.editClipService.selectedClip) {
             this.topBarState = {
                 title: `Edit Clip: ${this.editClipService.selectedClip.title}`,
                 back: () => { this.editClipService.closeEdit(); }
@@ -62,6 +49,4 @@ export class QueueComponent {
             this.topBarState = this.defaultTopBar;
         }
     }
-
-    private _copyOfTestClip() { return JSON.parse(JSON.stringify(this._testClip)); }
 }
