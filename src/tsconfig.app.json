@@ -5,7 +5,6 @@
         "module": "es2015",
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
-        "strictNullChecks": false,
         "baseUrl": "",
         "types": []
     },
