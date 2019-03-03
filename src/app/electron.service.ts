@@ -8,6 +8,8 @@ import * as fs from 'fs';
 
 @Injectable()
 export class ElectronService {
+    tempDir?: string;
+    userDataDir?: string;
 
     ipcRenderer: typeof ipcRenderer;
     webFrame: typeof webFrame;
@@ -22,6 +24,9 @@ export class ElectronService {
 
         this.childProcess = window.require('child_process');
         this.fs = window.require('fs');
+
+        this.tempDir = this.remote.app.getPath('temp') + '/cliply';
+        this.userDataDir = this.remote.app.getPath('userData');
     }
 
     isElectron = () => {
