@@ -41,6 +41,7 @@ import { EditClipService } from './shared/clip-card/edit-clip.service';
 import { SettingsService } from './shared/user-data/settings.service';
 import { ClipStorageService } from './shared/user-data/clip-storage.service';
 import { LocalFileServer } from './local-file-server.service';
+import { FfmpegService } from './shared/ffmpeg.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -88,7 +89,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         EditClipService,
         ClipStorageService,
         SettingsService,
-        LocalFileServer
+        LocalFileServer,
+        FfmpegService
     ],
     bootstrap: [AppComponent]
 })
