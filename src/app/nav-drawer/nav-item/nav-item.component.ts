@@ -10,11 +10,14 @@ import { NavItem } from './nav-item.model';
     }
 })
 export class NavItemComponent implements OnInit {
-    @Input() navItem: NavItem;
-    @HostListener('click') onClick = () => { this.navItem.click(); };
+    @Input() navItem?: NavItem;
+    @HostListener('click') onClick() {
+        if (this.navItem) {
+            this.navItem.click();
+        }
+    }
 
     constructor() { }
 
     ngOnInit() { }
-
 }
