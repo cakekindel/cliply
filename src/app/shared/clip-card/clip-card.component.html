@@ -10,12 +10,7 @@
             <img class="youtube-logo" src="../../../assets/images/youtube_logo_light.svg" matTooltip="Will be uploaded to YouTube" *ngIf="clip.uploadToYoutube">
         </span>
     </div>
-    <video class="thumbnail"
-           src="{{clip.file.url}}"
-           (mouseover)="thumbnailMouseover()"
-           (mouseleave)="thumbnailMouseleave()"
-           #clip_thumbnail>
-    </video>
+    <app-thumb-hover-preview [clip]="clip"></app-thumb-hover-preview>
     <div class="buttons">
         <app-button text *ngIf="!clip.exported">EXPORT</app-button>
     </div>

@@ -35,11 +35,10 @@
         }
     }
 
-    .thumbnail {
+    app-thumb-hover-preview {
         margin: 16px -16px;
         width: 344px;
         height: 192px;
-        object-fit: cover;
     }
 
     .buttons {
