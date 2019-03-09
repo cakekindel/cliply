@@ -42,6 +42,7 @@ import { SettingsService } from './shared/user-data/settings.service';
 import { ClipStorageService } from './shared/user-data/clip-storage.service';
 import { LocalFileServer } from './local-file-server.service';
 import { FfmpegService } from './shared/ffmpeg.service';
+import { ThumbHoverPreviewComponent } from './shared/clip-card/thumb-hover-preview/thumb-hover-preview.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -63,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         TopBarComponent,
         MorphFromDirective,
         EditClipComponent,
+        ThumbHoverPreviewComponent,
     ],
     imports: [
         BrowserModule,
