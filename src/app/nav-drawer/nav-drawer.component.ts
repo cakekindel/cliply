@@ -7,7 +7,7 @@ import { NavigationService } from './navigation.service';
     styleUrls: ['./nav-drawer.component.scss']
 })
 export class NavDrawerComponent implements OnInit {
-    constructor(private navService: NavigationService) { }
+    constructor(public navService: NavigationService) { }
 
     ngOnInit() { }
 }
