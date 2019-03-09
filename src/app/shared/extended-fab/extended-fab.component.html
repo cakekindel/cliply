@@ -1,18 +1,18 @@
-<div [class]="'fab-container mat-ripple ' + model.type.className"
+<div [class]="'fab-container mat-ripple ' + model?.type.className"
      (mousedown)="mouseDown()"
      (mouseup)="mouseUp()"
      [class.mat-elevation-z6]="!pressed"
      [class.mat-elevation-z12]="pressed"
-     [matRippleColor]="model.type.rippleColor"
+     [matRippleColor]="model?.type.rippleColor"
      matRipple>
 
-    <i class="material-icons">{{model.icon}}</i>
-    <span>{{model.label}}</span>
+    <i class="material-icons">{{model?.icon}}</i>
+    <span>{{model?.label}}</span>
     <input type="file"
-           *ngIf="model.file"
+           *ngIf="model?.file"
            style="display: none;"
-           [attr.multiple]="model.file.multiple"
-           [accept]="model.file.accept"
+           [attr.multiple]="model?.file.multiple"
+           [accept]="model?.file.accept"
            (change)="filesChosen($event.target.files)"
            #file>
 </div>
