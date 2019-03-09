@@ -23,6 +23,7 @@ export class FfmpegService {
         this.ffmpeg(videoPath)
             .thumbnail({
                 count: 1,
+                timestamps: [0],
                 folder: this.thumbnailsDir,
                 filename: fileName,
                 size: '640x480'
