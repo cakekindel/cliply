@@ -36,8 +36,6 @@ export class FfmpegService {
     }
 
     private ffmpeg(videoPath: string) {
-        // tslint:disable-next-line:no-debugger
-        debugger;
         return fluentFfmpeg(videoPath).setFfmpegPath(this.binaries.ffmpeg).setFfprobePath(this.binaries.ffprobe);
     }
 }
