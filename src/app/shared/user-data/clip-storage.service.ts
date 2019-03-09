@@ -3,6 +3,7 @@ import { ElectronService } from '../../electron.service';
 import { ClipsFile as ClipsFile } from './clips-file.model';
 import { Clip } from '../models/clip.model';
 import { LocalFileServer } from '../../local-file-server.service';
+import { FfmpegService } from '../ffmpeg.service';
 
 @Injectable()
 export class ClipStorageService {
@@ -11,7 +12,7 @@ export class ClipStorageService {
     private readonly clipsPath: string;
     private readonly thumbnailsPath: string;
 
-    constructor(private electron: ElectronService, private fileServer: LocalFileServer) {
+    constructor(private electron: ElectronService, private fileServer: LocalFileServer, private ffmpeg: FfmpegService) {
         this.clipsPath = electron.remote.app.getPath('userData') + '/clips.json';
         this.thumbnailsPath = electron.remote.app.getPath('userData') + '/thumbnails';
 
@@ -20,10 +21,13 @@ export class ClipStorageService {
 
     public newClips(fileList: FileList) {
         const files = Array.from(fileList);
-        files.forEach((file) => {
+        files.forEach(async (file) => {
             const clip = new Clip();
             clip.file.path = file.path;
             clip.file.url = this.fileServer.urlFromPath(file.path);
+
+            const thumbnailPath = await this.ffmpeg.generateThumbnail(file.path);
+            clip.file.thumbnailUrl = this.fileServer.urlFromPath(thumbnailPath);
 
             this.clips.queue.push(clip);
         });
