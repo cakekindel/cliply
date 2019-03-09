@@ -1,3 +1,2 @@
-<p>
-  thumb-hover-preview works!
-</p>
+<img src="{{clip.file.thumbnailUrl}}" alt="Thumbnail not found!">
+<video src="{{clip.file.url}}" *ngIf="hovering" #video_preview></video>
