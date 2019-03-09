@@ -23,7 +23,9 @@
                             "src/favicon.png",
                             "src/favicon.icns",
                             "src/favicon.256x256.png",
-                            "src/favicon.512x512.png"
+                            "src/favicon.512x512.png",
+                            "src/assets/ffmpeg.exe",
+                            "src/assets/ffprobe.exe"
                         ],
                         "styles": [
                             "src/styles.scss"
@@ -109,7 +111,9 @@
                             "src/favicon.png",
                             "src/favicon.icns",
                             "src/favicon.256x256.png",
-                            "src/favicon.512x512.png"
+                            "src/favicon.512x512.png",
+                            "src/assets/ffmpeg.exe",
+                            "src/assets/ffprobe.exe"
                         ]
                     }
                 },
