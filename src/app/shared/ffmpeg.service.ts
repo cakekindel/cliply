@@ -2,24 +2,42 @@ import { Injectable } from '@angular/core';
 import * as fluentFfmpeg from 'fluent-ffmpeg';
 import { ElectronService } from '../electron.service';
 import { Guid } from './guid.type';
-
-const FFMPEG_PATH = '../../assets/ffmpeg.exe';
-const FFPROBE_PATH = '../../assets/ffprobe.exe';
+import { get as getAppRoot } from 'app-root-dir';
 
 @Injectable()
 export class FfmpegService {
-    constructor(private electronService: ElectronService) { }
+    private readonly thumbnailsDir: string;
+    private readonly binaries: { ffmpeg: string, ffprobe: string };
 
-    public generateThumbnail(videoPath: string) {
-        this.ffmpeg(videoPath)
-            .thumbnail({
-                count: 1,
-                folder: this.electronService.tempDir,
-                filename: Guid.newGuid().toString() + '.png'
-            });
+    constructor(private electronService: ElectronService) {
+        this.thumbnailsDir = this.electronService.userDataDir + '/thumbnails/';
+        this.binaries = {
+            ffmpeg: getAppRoot() + '/dist/assets/ffmpeg.exe',
+            ffprobe: getAppRoot() + '/dist/assets/ffprobe.exe'
+        };
+    }
+
+    public async generateThumbnail(videoPath: string) {
+        const fileName = Guid.newGuid().toString() + '.png';
+
+        const fileNamePromise = new Promise<string>((resolve) => {
+            this.ffmpeg(videoPath)
+                .on('end', () => {
+                    resolve(this.thumbnailsDir + fileName);
+                })
+                .thumbnail({
+                    count: 1,
+                    folder: this.thumbnailsDir,
+                    filename: fileName
+                });
+        });
+
+        return await fileNamePromise;
     }
 
     private ffmpeg(videoPath: string) {
-        return fluentFfmpeg(videoPath).setFfmpegPath(FFMPEG_PATH).setFfprobePath(FFPROBE_PATH);
+        // tslint:disable-next-line:no-debugger
+        debugger;
+        return fluentFfmpeg(videoPath).setFfmpegPath(this.binaries.ffmpeg).setFfprobePath(this.binaries.ffprobe);
     }
 }
