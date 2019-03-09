@@ -17,22 +17,18 @@ export class FfmpegService {
         };
     }
 
-    public async generateThumbnail(videoPath: string) {
+    public makeThumbnail(videoPath: string) {
         const fileName = Guid.newGuid().toString() + '.png';
 
-        const fileNamePromise = new Promise<string>((resolve) => {
-            this.ffmpeg(videoPath)
-                .on('end', () => {
-                    resolve(this.thumbnailsDir + fileName);
-                })
-                .thumbnail({
-                    count: 1,
-                    folder: this.thumbnailsDir,
-                    filename: fileName
-                });
-        });
+        this.ffmpeg(videoPath)
+            .thumbnail({
+                count: 1,
+                folder: this.thumbnailsDir,
+                filename: fileName,
+                size: '640x480'
+            });
 
-        return await fileNamePromise;
+        return this.thumbnailsDir + fileName;
     }
 
     private ffmpeg(videoPath: string) {

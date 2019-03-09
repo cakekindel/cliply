@@ -21,17 +21,15 @@ export class ClipStorageService {
 
     public newClips(fileList: FileList) {
         const files = Array.from(fileList);
-        files.forEach(async (file) => {
+        files.forEach((file) => {
             const clip = new Clip();
             clip.file.path = file.path;
             clip.file.url = this.fileServer.urlFromPath(file.path);
 
-            const thumbnailPath = await this.ffmpeg.generateThumbnail(file.path);
+            const thumbnailPath = this.ffmpeg.makeThumbnail(file.path);
             clip.file.thumbnailUrl = this.fileServer.urlFromPath(thumbnailPath);
-
             this.clips.queue.push(clip);
         });
-
         this.save();
     }
 
