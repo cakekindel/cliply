@@ -1,8 +1,7 @@
 <div class="clip-card mat-ripple mat-elevation-z1"
      (click)="editClipService.editClip(clip)"
      #clip_card
-     matRipple
-     *ngIf="clip !== undefined">
+     matRipple>
     <div class="title-container">
         <h6 class="title">{{clip.title}}</h6>
         <span class="sub-title">

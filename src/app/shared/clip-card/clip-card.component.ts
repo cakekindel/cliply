@@ -10,7 +10,7 @@ import { EditClipService } from './edit-clip.service';
     styleUrls: ['./clip-card.component.scss']
 })
 export class ClipCardComponent implements OnInit {
-    @Input() clip?: Clip;
+    @Input() clip = new Clip();
 
     @ViewChild('clip_thumbnail') clipThumbElement?: ElementRef<HTMLVideoElement>;
 

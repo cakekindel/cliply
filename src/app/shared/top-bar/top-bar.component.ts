@@ -14,9 +14,7 @@ export class TopBarComponent implements OnInit {
     hasFabs = false;
 
     @Input() set currentState(state: TopBarState) {
-        if (state.fabs && state.fabs.length > 0) {
-            this.hasFabs = true;
-        }
+        this.hasFabs = state.fabs !== undefined && state.fabs.length > 0;
 
         if (this.state) {
             this.transitionToState(state);
