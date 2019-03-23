@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Clip } from '../models/clip.model';
+import { Clip } from '../shared/models/clip.model';
 import { timer, Subject, Subscription } from 'rxjs';
-import { MORPH_DURATION_MS } from '../morph-from.directive';
-import { ClipStorageService } from '../../core/clip-storage.service';
+import { MORPH_DURATION_MS } from '../shared/morph-from.directive';
+import { ClipStorageService } from './clip-storage.service';
 
 @Injectable()
 export class EditClipService {

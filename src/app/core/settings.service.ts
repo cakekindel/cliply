@@ -1,12 +1,10 @@
 import { ElectronService } from './electron.service';
-import { SettingsFile } from '../shared/user-data/settings-file.model';
-import { Clip } from '../shared/models/clip.model';
+
 import { Injectable } from '@angular/core';
+import { SettingsFile } from '../shared/models/settings-file.model';
 
 @Injectable()
 export class SettingsService {
-    public clipQueue: Clip[] = [];
-    public clipLibrary: Clip[] = [];
     public settings = new SettingsFile();
 
     private userDataPath: string;
