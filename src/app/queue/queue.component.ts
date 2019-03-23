@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TopBarState } from '../shared/top-bar/top-bar.component';
 import { FabTypes } from '../shared/extended-fab/extended-fab.component';
 import { EditClipService } from '../shared/clip-card/edit-clip.service';
-import { ClipStorageService } from '../shared/user-data/clip-storage.service';
+import { ClipStorageService } from '../core/clip-storage.service';
 
 @Component({
     selector: 'app-queue',

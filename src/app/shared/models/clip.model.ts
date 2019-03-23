@@ -40,5 +40,5 @@ export class YouTubePrivacy {
     static Private = 'Private';
     static Unlisted = 'Unlisted';
 
-    static enum = [YouTubePrivacy.Public, YouTubePrivacy.Private, YouTubePrivacy.Unlisted];
+    static Privacies = [YouTubePrivacy.Public, YouTubePrivacy.Private, YouTubePrivacy.Unlisted];
 }

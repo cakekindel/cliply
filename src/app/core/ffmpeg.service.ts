@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as fluentFfmpeg from 'fluent-ffmpeg';
-import { ElectronService } from '../electron.service';
-import { Guid } from './guid.type';
+import { ElectronService } from './electron.service';
+import { Guid } from '../shared/guid.type';
 import { get as getAppRoot } from 'app-root-dir';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavItem } from './nav-item/nav-item.model';
+import { NavItem } from '../nav-drawer/nav-item/nav-item.model';
 import { Router } from '@angular/router';
 
 @Injectable()

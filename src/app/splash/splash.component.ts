@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { timer } from 'rxjs';
-import { NavigationService } from '../nav-drawer/navigation.service';
+import { NavigationService } from '../core/navigation.service';
 
 @Component({
     selector: 'app-splash',

@@ -9,7 +9,7 @@ import { EditClipService } from '../edit-clip.service';
 })
 export class EditClipComponent {
     clip = new Clip();
-    youtubePrivacies = YouTubePrivacy.enum;
+    youtubePrivacies = YouTubePrivacy.Privacies;
 
     constructor(public editClipService: EditClipService) {
         if (editClipService.selectedClip) {

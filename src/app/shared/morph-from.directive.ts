@@ -2,6 +2,7 @@ import { Directive, Input, ElementRef, Renderer2 } from '@angular/core';
 import { timer } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 
+// TODO: convert to dynamic Angular Animations using AnimationBuilder
 @Directive({
     selector: '[morphFrom]'
 })

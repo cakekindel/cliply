@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Clip } from '../models/clip.model';
-import { timer } from 'rxjs';
-import { MORPH_DURATION_MS } from '../morph-from.directive';
 import { EditClipService } from './edit-clip.service';
 
 @Component({

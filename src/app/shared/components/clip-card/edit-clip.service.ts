@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Clip } from '../models/clip.model';
 import { timer, Subject, Subscription } from 'rxjs';
 import { MORPH_DURATION_MS } from '../morph-from.directive';
+import { ClipStorageService } from '../../core/clip-storage.service';
 
 @Injectable()
 export class EditClipService {
@@ -16,7 +17,7 @@ export class EditClipService {
     private renderEditTimer?: Subscription;
     private showEditScrimTimer?: Subscription;
 
-    constructor() { }
+    constructor(private clipStorage: ClipStorageService) { }
 
     editClip(clip: Clip) {
         this.selectedClip = clip;
@@ -33,6 +34,11 @@ export class EditClipService {
         this.renderEdit = true;
         this.showEdit = true;
         this.showEditScrim = true;
+    }
+
+    save() {
+        this.clipStorage.save();
+        this.closeEdit();
     }
 
     closeEdit() {
