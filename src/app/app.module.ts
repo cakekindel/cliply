@@ -1,3 +1,4 @@
+import { WindowTitleBarModule } from './window-title-bar/window-title-bar.module';
 import { AppRoutingModule } from './app-routing.module';
 import 'reflect-metadata';
 import '../polyfills';
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
         SharedModule,
         AppRoutingModule,
 
+        WindowTitleBarModule,
         NavDrawerModule,
         QueueModule,
         SplashModule,

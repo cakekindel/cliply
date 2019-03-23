@@ -8,6 +8,22 @@ import * as fs from 'fs';
 
 @Injectable()
 export class ElectronService {
+    public window = {
+        close: () => {
+            this.remote.getCurrentWindow().close();
+        },
+        maximize: () => {
+            if (this.remote.getCurrentWindow().isMaximized()) {
+                this.remote.getCurrentWindow().unmaximize();
+            } else {
+                this.remote.getCurrentWindow().maximize();
+            }
+        },
+        minimize: () => {
+            this.remote.getCurrentWindow().minimize();
+        },
+    };
+
     userDataDir?: string;
 
     ipcRenderer: typeof ipcRenderer;
