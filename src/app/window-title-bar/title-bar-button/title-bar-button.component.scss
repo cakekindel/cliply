@@ -21,7 +21,12 @@
     }
 
     &:hover {
+        transition: background 0.05s ease;
         background: rgba($color-secondary-dark, 0.5);
+    }
+
+    &:active, &.dark:active {
+        background: rgba($color-primary, 0.5);
     }
 
     i {
