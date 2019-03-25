@@ -1,3 +1,4 @@
+import { AppConfig } from './src/environments/environment';
 import { app, BrowserWindow, screen, protocol } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
@@ -21,6 +22,9 @@ function createWindow() {
         y: 0,
         width: size.width,
         height: size.height,
+        webPreferences: {
+            webSecurity: AppConfig.production
+        },
         frame: false,
     });
 
