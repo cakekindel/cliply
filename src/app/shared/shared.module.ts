@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatRippleModule, MatTooltipModule, MatInputModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoadLocalFilePipe } from './pipes/load-local-file.pipe';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         TopBarComponent,
         EditClipComponent,
         ThumbHoverPreviewComponent,
+        LoadLocalFilePipe,
     ],
     exports: [
         MorphFromDirective,

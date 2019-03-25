@@ -1,2 +1,2 @@
-<img src="{{clip.file.thumbnailUrl}}" alt="Thumbnail not found!">
-<video src="{{clip.file.url}}" *ngIf="hovering" #video_preview></video>
+<img [src]="clip.file.thumbnailPath | loadLocalFile" alt="Thumbnail not found!">
+<video [src]="clip.file.path | loadLocalFile" *ngIf="hovering" #video_preview></video>
