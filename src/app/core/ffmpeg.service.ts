@@ -3,6 +3,7 @@ import * as fluentFfmpeg from 'fluent-ffmpeg';
 import { ElectronService } from './electron.service';
 import { Guid } from '../shared/guid.type';
 import { get as getAppRoot } from 'app-root-dir';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class FfmpegService {
@@ -20,16 +21,22 @@ export class FfmpegService {
     public makeThumbnail(videoPath: string) {
         const fileName = Guid.newGuid().toString() + '.png';
 
-        this.ffmpeg(videoPath)
-            .thumbnail({
-                count: 1,
-                timestamps: [0],
-                folder: this.thumbnailsDir,
-                filename: fileName,
-                size: '640x480'
-            });
+        const pathObs = Observable.create((sub) => {
+            this.ffmpeg(videoPath)
+                .thumbnail({
+                    count: 1,
+                    timestamps: [0],
+                    folder: this.thumbnailsDir,
+                    filename: fileName,
+                    size: '640x480'
+                })
+                .on('end', () => {
+                    sub.next(this.thumbnailsDir + fileName);
+                    sub.complete();
+                });
+        });
 
-        return this.thumbnailsDir + fileName;
+        return pathObs;
     }
 
     private ffmpeg(videoPath: string) {

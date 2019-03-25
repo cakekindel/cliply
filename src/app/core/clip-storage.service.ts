@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { ElectronService } from './electron.service';
 
 import { ClipsFile } from '../shared/models/clips-file.model';
@@ -12,7 +12,7 @@ export class ClipStorageService {
     private readonly clipsPath: string;
     private readonly thumbnailsPath: string;
 
-    constructor(private electron: ElectronService, private ffmpeg: FfmpegService) {
+    constructor(private electron: ElectronService, private ffmpeg: FfmpegService, private zone: NgZone) {
         this.clipsPath = electron.remote.app.getPath('userData') + '/clips.json';
         this.thumbnailsPath = electron.remote.app.getPath('userData') + '/thumbnails';
 
@@ -21,16 +21,22 @@ export class ClipStorageService {
 
     public newClips(fileList: FileList) {
         const files = Array.from(fileList);
-        files.forEach((file) => {
+        files.forEach((file, i) => {
             const clip = new Clip();
             clip.file.path = file.path;
-            clip.file.url = ''; // this.fileServer.urlFromPath(file.path);
 
-            const thumbnailPath = this.ffmpeg.makeThumbnail(file.path);
-            clip.file.thumbnailUrl = ''; // this.fileServer.urlFromPath(thumbnailPath);
-            this.clips.queue.push(clip);
+            this.ffmpeg.makeThumbnail(file.path).subscribe((path) => {
+                // need to use zone.run because subscribing in forEach is outside change detection
+                this.zone.run(() => {
+                    this.clips.queue.push(clip);
+                    clip.file.thumbnailPath = path;
+
+                    if (i === files.length - 1) {
+                        this.save();
+                    }
+                });
+            });
         });
-        this.save();
     }
 
     public save() {
