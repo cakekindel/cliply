@@ -21,9 +21,7 @@ export class Clip {
 }
 
 class FileInfo {
-    /** stream url for safely using in template without disabling webSecurity */
-    url = '';
-    thumbnailUrl = '';
+    thumbnailPath = '';
     path = '';
     sizeMb = 0;
     durationMs = 0;
