@@ -41,13 +41,11 @@ export class EditClipService {
     }
 
     save() {
-        this.clipStorage.clips.queue = this.clipStorage.clips.queue.map((clip) => {
-            if (clip.id === this.clipToEdit.id) {
-                return this.clipToEdit;
-            } else {
-                return clip;
-            }
-        });
+        if (this.clipToEdit.title !== this.clipToEditUnchanged.title) {
+            this.clipToEdit.titleUnchanged = false;
+        }
+
+        Object.assign(this.clipToEditUnchanged, this.clipToEdit);
 
         this.clipStorage.save();
         this.closeEdit();
