@@ -10,7 +10,11 @@
         </mat-radio-group>
     </div>
 </form>
-<video src="../../../../assets/demo_clip.mp4"></video>
+<video [src]="editClipService.clipToEdit.inputPath | loadLocalFile"></video>
+<app-trim-video-slider [duration]="editClipService.clipToEdit.durationMs"
+                       (startAtChange)="startAtChangeHandler($event)"
+                       (endAtChange)="endAtChangeHandler($event)">
+</app-trim-video-slider>
 <div class="buttons">
     <app-button outlined (clicked)="editClipService.closeEdit()">CANCEL</app-button>
     <app-button primary (clicked)="editClipService.save()">SAVE</app-button>

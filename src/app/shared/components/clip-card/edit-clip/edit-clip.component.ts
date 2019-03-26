@@ -13,7 +13,19 @@ export class EditClipComponent {
     constructor(public editClipService: EditClipService) { }
 
     @HostListener('click', ['$event'])
-    click(event: MouseEvent) {
+    public click(event: MouseEvent) {
         event.stopPropagation();
+    }
+
+    public startAtChangeHandler(timestamp: number) {
+        // render frame at timestamp
+        // debounce?
+        this.editClipService.clipToEdit.startAtMs = timestamp;
+    }
+
+    public endAtChangeHandler(timestamp: number) {
+        // render frame at timestamp
+        // debounce?
+        this.editClipService.clipToEdit.endAtMs = timestamp;
     }
 }
