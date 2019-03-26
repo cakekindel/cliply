@@ -19,6 +19,10 @@
         .title {
             font-weight: $font-weight-semibold;
             font-size: 21px;
+
+            &.title-unchanged {
+                opacity: 0.6;
+            }
         }
 
         .sub-title {

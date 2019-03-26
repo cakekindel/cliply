@@ -3,10 +3,13 @@
      #clip_card
      matRipple>
     <div class="title-container">
-        <h6 class="title">{{clip.title}}</h6>
+        <h6 class="title" [class.title-unchanged]="clip.titleUnchanged">{{clip.title}}</h6>
         <span class="sub-title">
-            {{clip.duration}} &bull; {{clip.file.sizeMb}}MB &bull;
-            <img class="youtube-logo" src="../../../assets/images/youtube_logo_light.svg" matTooltip="Will be uploaded to YouTube" *ngIf="clip.uploadToYoutube">
+            {{clip.formattedDuration}}
+            &bull; {{clip.sizeMb}}MB
+            <ng-container *ngIf="clip.uploadToYoutube">
+                &bull; <img class="youtube-logo" src="../../../assets/images/youtube_logo_light.svg" matTooltip="Will be uploaded to YouTube">
+            </ng-container>
         </span>
     </div>
     <app-thumb-hover-preview [clip]="clip"></app-thumb-hover-preview>
@@ -18,6 +21,6 @@
 <div class="edit-clip-scrim scrim-fade-in"
      [class.scrim-fade-out]="!editClipService.showEdit"
      (click)="editClipService.closeEdit()"
-     *ngIf="editClipService.renderEdit && editClipService.selectedClip === clip">
+     *ngIf="editClipService.renderEdit && editClipService.clipToEdit.id === clip.id">
     <app-edit-clip [morphFrom]="clip_card" [morph]="editClipService.showEdit"></app-edit-clip>
 </div>

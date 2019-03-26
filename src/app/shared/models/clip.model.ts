@@ -1,15 +1,41 @@
+import { Guid } from '../guid.type';
+
 export class Clip {
     private _durationString = '';
+    private _durationMs = 0;
 
-    title = '';
-    exported = false;
-    uploadToYoutube = false;
-    youtubeMetadata = new YouTubeMetadata();
-    file = new FileInfo();
+    public id = Guid.newGuid().toString();
 
-    get duration() {
+    public titleUnchanged = true;
+    public title = '';
+
+    public inputPath = '';
+    public thumbnailPath = '';
+    public outputPath = '';
+    public startAtSec = 0;
+    public sizeMb = 0;
+
+    public get durationMs() { return this._durationMs; }
+    public set durationMs(duration: number) {
+        this._durationMs = duration;
+        this._durationString = '';
+    }
+
+    public get formattedDuration() { return this.getFormattedDuration(); }
+
+    public exported = false;
+    public uploadToYoutube = false;
+    public youtubeMetadata = new YouTubeMetadata();
+
+    constructor(init?: Partial<Clip>) {
+        if (init) {
+            Object.assign(this, init);
+        }
+    }
+
+    private getFormattedDuration() {
         if (!this._durationString) {
-            const durationSec = Math.floor(this.file.durationMs / 1000);
+            const durationSec = Math.floor(this.durationMs / 1000);
             const durationMin = Math.floor(durationSec / 60);
             const leftoverDurationSec = durationSec - durationMin * 60;
 
@@ -18,14 +44,6 @@ export class Clip {
 
         return this._durationString;
     }
-}
-
-class FileInfo {
-    thumbnailPath = '';
-    path = '';
-    sizeMb = 0;
-    durationMs = 0;
-    startAtMs = 0;
 }
 
 class YouTubeMetadata {
