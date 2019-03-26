@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { MatRippleModule, MatTooltipModule, MatInputModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoadLocalFilePipe } from './pipes/load-local-file.pipe';
+import { TrimVideoSliderComponent } from './components/trim-video-slider/trim-video-slider.component';
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import { LoadLocalFilePipe } from './pipes/load-local-file.pipe';
         EditClipComponent,
         ThumbHoverPreviewComponent,
         LoadLocalFilePipe,
+        TrimVideoSliderComponent,
     ],
     exports: [
         MorphFromDirective,

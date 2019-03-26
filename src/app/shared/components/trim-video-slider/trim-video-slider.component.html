@@ -1,0 +1,11 @@
+<div class="runner runner-inactive">
+    <div class="active-runner-container">
+        <div class="runner runner-active"></div>
+    </div>
+    <div class="thumb start-thumb" [style.left.%]="startThumb.positionPercent" (mouseover)="showStartThumbLabel = true" (mouseleave)="showStartThumbLabel = false" #startThumbRef>
+        <span class="thumb-label" *ngIf="showStartThumbLabel" @fadeInOut>0:02</span>
+    </div>
+    <div class="thumb end-thumb" (mouseover)="showEndThumbLabel = true" (mouseleave)="showEndThumbLabel = false" #endThumbRef>
+        <span class="thumb-label" *ngIf="showEndThumbLabel" @fadeInOut>2:43</span>
+    </div>
+</div>
