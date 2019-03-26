@@ -23,19 +23,21 @@ export class ClipStorageService {
         const files = Array.from(fileList);
         files.forEach((file, i) => {
             const clip = new Clip();
-            clip.file.path = file.path;
+            clip.inputPath = file.path;
 
-            this.ffmpeg.makeThumbnail(file.path).subscribe((path) => {
-                // need to use zone.run because subscribing in forEach is outside change detection
-                this.zone.run(() => {
-                    this.clips.queue.push(clip);
-                    clip.file.thumbnailPath = path;
+            this.ffmpeg
+                .fromClip(clip)
+                .makeThumbnail()
+                .setMetadata()
+                .subscribe(() => {
+                    this.zone.run(() => {
+                        this.clips.queue.push(clip);
 
-                    if (i === files.length - 1) {
-                        this.save();
-                    }
+                        if (i === files.length - 1) {
+                            this.save();
+                        }
+                    });
                 });
-            });
         });
     }
 
@@ -51,7 +53,7 @@ export class ClipStorageService {
 
         if (this.electron.fs.existsSync(this.clipsPath)) {
             const clipsJson = this.electron.fs.readFileSync(this.clipsPath, 'utf8');
-            this.clips = JSON.parse(clipsJson);
+            this.clips = new ClipsFile(clipsJson);
         } else {
             this.save();
         }
