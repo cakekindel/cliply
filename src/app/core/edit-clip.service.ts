@@ -3,12 +3,14 @@ import { Clip } from '../shared/models/clip.model';
 import { timer, Subject, Subscription } from 'rxjs';
 import { MORPH_DURATION_MS } from '../shared/morph-from.directive';
 import { ClipStorageService } from './clip-storage.service';
+import * as _ from 'lodash';
 
 @Injectable()
 export class EditClipService {
     public editingClip$ = new Subject<boolean>();
 
-    selectedClip?: Clip;
+    clipToEdit = new Clip();
+    clipToEditUnchanged = new Clip();
 
     renderEdit = false;
     showEdit = false;
@@ -20,7 +22,9 @@ export class EditClipService {
     constructor(private clipStorage: ClipStorageService) { }
 
     editClip(clip: Clip) {
-        this.selectedClip = clip;
+        this.clipToEditUnchanged = clip;
+        this.clipToEdit = _.cloneDeep(clip);
+
         this.editingClip$.next(true);
 
         // cancel timers if another clip was clicked before they fired
@@ -37,6 +41,14 @@ export class EditClipService {
     }
 
     save() {
+        this.clipStorage.clips.queue = this.clipStorage.clips.queue.map((clip) => {
+            if (clip.id === this.clipToEdit.id) {
+                return this.clipToEdit;
+            } else {
+                return clip;
+            }
+        });
+
         this.clipStorage.save();
         this.closeEdit();
     }

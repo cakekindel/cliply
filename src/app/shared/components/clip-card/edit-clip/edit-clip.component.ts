@@ -8,14 +8,9 @@ import { EditClipService } from '../../../../core/edit-clip.service';
     styleUrls: ['./edit-clip.component.scss']
 })
 export class EditClipComponent {
-    clip = new Clip();
     youtubePrivacies = YouTubePrivacy.Privacies;
 
-    constructor(public editClipService: EditClipService) {
-        if (editClipService.selectedClip) {
-            this.clip = editClipService.selectedClip;
-        }
-    }
+    constructor(public editClipService: EditClipService) { }
 
     @HostListener('click', ['$event'])
     click(event: MouseEvent) {
