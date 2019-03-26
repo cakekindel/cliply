@@ -12,7 +12,8 @@ export class Clip {
     public inputPath = '';
     public thumbnailPath = '';
     public outputPath = '';
-    public startAtSec = 0;
+    public startAtMs = 0;
+    public endAtMs = 0;
     public sizeMb = 0;
 
     public get durationMs() { return this._durationMs; }
