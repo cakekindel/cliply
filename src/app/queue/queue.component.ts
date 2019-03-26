@@ -40,9 +40,9 @@ export class QueueComponent {
     }
 
     editingClip(editing: boolean) {
-        if (editing && this.editClipService.selectedClip) {
+        if (editing && this.editClipService.clipToEdit) {
             this.topBarState = {
-                title: `Edit Clip: ${this.editClipService.selectedClip.title}`,
+                title: `Edit Clip: ${this.editClipService.clipToEdit.title}`,
                 back: () => { this.editClipService.closeEdit(); }
             };
         } else {
