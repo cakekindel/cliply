@@ -1,18 +1,31 @@
 <div class="runner runner-inactive" #sliderRef>
-    <div class="active-runner-container">
+    <div class="active-runner-container"
+         [style.width.%]="endThumb.positionPercent - startThumb.positionPercent"
+         [style.left.%]="startThumb.positionPercent">
         <div class="runner runner-active" #activeRunnerRef></div>
     </div>
     <div class="thumb start-thumb"
          [style.left.%]="startThumb.positionPercent"
+         (mouseover)="startThumb.showLabel = true"
+         (mouseleave)="startThumb.showLabel = draggingThumb"
          (pointerdown)="thumbPointerDown(startThumb, $event)"
          (pointerup)="thumbPointerUp(startThumb, $event)"
          #startThumbRef>
-        <span class="thumb-label" *ngIf="startThumb.showLabel" @fadeInOut>0:02</span>
+        <span class="thumb-label" [class.active]="draggingThumb" *ngIf="startThumb.showLabel" @fadeInOut>
+            <span class="thumb-label-text">{{ startThumb.timeStamp }}</span>
+            <div class="thumb-label-triangle"></div>
+        </span>
     </div>
     <div class="thumb end-thumb"
-         (mousedown)="thumbMouseDown(endThumb, $event)"
-         (mouseup)="thumbMouseUp(endThumb, $event)"
+         [style.right.%]="100 - endThumb.positionPercent"
+         (mouseover)="endThumb.showLabel = true"
+         (mouseleave)="endThumb.showLabel = draggingThumb"
+         (pointerdown)="thumbPointerDown(endThumb, $event)"
+         (pointerup)="thumbPointerUp(endThumb, $event)"
          #endThumbRef>
-        <span class="thumb-label" *ngIf="endThumb.showLabel" @fadeInOut>2:43</span>
+        <span class="thumb-label" [class.active]="draggingThumb" *ngIf="endThumb.showLabel" @fadeInOut>
+            <span class="thumb-label-text">{{ endThumb.timeStamp }}</span>
+            <div class="thumb-label-triangle"></div>
+        </span>
     </div>
 </div>
