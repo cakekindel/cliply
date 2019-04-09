@@ -15,7 +15,7 @@
 
     &.contained-btn {
         color: $color-font-secondary;
-        @include background-opacity($color-secondary, 0.9);
+        @include background-opacity($color-secondary, 0.8);
     
         &:hover {
             @include background-opacity($color-secondary, 1);
