@@ -58,6 +58,7 @@ export class FfmpegService {
                     clip.title = title;
 
                     clip.durationMs = parseFloat(probeInfo.duration) * 1000;
+                    clip.endAtMs = parseFloat(probeInfo.duration) * 1000;
 
                     const sizeMb = parseFloat(probeInfo.size) / 1000000;
                     clip.sizeMb = Math.floor(sizeMb * 100) / 100;
