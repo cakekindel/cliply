@@ -10,10 +10,11 @@
         </mat-radio-group>
     </div>
 </form>
-<video [src]="editClipService.clipToEdit.inputPath | loadLocalFile"></video>
-<app-trim-video-slider [duration]="editClipService.clipToEdit.durationMs"
-                       (startAtChange)="startAtChangeHandler($event)"
-                       (endAtChange)="endAtChangeHandler($event)">
+<video [src]="editClipService.clipToEdit.inputPath | loadLocalFile" #videoRef></video>
+<app-trim-video-slider *ngIf="editClipService.clipToEdit"
+                       [clip]="editClipService.clipToEdit"
+                       [(currentTime)]="currentTime"
+                       (updateThumbnail)="updateThumbnail($event)">
 </app-trim-video-slider>
 <div class="buttons">
     <app-button outlined (clicked)="editClipService.closeEdit()">CANCEL</app-button>

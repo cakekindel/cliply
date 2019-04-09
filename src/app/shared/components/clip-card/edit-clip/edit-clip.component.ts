@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { Clip, YouTubePrivacy } from '../../../models/clip.model';
 import { EditClipService } from '../../../../core/edit-clip.service';
 
@@ -8,24 +8,24 @@ import { EditClipService } from '../../../../core/edit-clip.service';
     styleUrls: ['./edit-clip.component.scss']
 })
 export class EditClipComponent {
+    currentTime = 0;
     youtubePrivacies = YouTubePrivacy.Privacies;
 
-    constructor(public editClipService: EditClipService) { }
+    @ViewChild('videoRef') videoRef?: ElementRef<HTMLVideoElement>;
 
-    @HostListener('click', ['$event'])
-    public click(event: MouseEvent) {
+    constructor(public editClipService: EditClipService) {
+        this.currentTime = this.editClipService.clipToEdit.startAtMs;
+        this.updateThumbnail(this.currentTime);
+    }
+
+    @HostListener('mousedown', ['$event'])
+    public mousedown(event: MouseEvent) {
         event.stopPropagation();
     }
 
-    public startAtChangeHandler(timestamp: number) {
-        // render frame at timestamp
-        // debounce?
-        this.editClipService.clipToEdit.startAtMs = timestamp;
-    }
-
-    public endAtChangeHandler(timestamp: number) {
-        // render frame at timestamp
-        // debounce?
-        this.editClipService.clipToEdit.endAtMs = timestamp;
+    public updateThumbnail(timeMs: number) {
+        if (this.videoRef) {
+            this.videoRef.nativeElement.currentTime = timeMs / 1000;
+        }
     }
 }
