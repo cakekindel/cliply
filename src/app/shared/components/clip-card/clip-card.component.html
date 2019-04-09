@@ -20,7 +20,7 @@
 
 <div class="edit-clip-scrim scrim-fade-in"
      [class.scrim-fade-out]="!editClipService.showEdit"
-     (click)="editClipService.closeEdit()"
+     (mousedown)="editClipService.closeEdit();"
      *ngIf="editClipService.renderEdit && editClipService.clipToEdit.id === clip.id">
     <app-edit-clip [morphFrom]="clip_card" [morph]="editClipService.showEdit"></app-edit-clip>
 </div>
