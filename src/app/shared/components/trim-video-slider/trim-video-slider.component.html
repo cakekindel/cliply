@@ -1,8 +1,8 @@
-<div class="runner runner-inactive" #sliderRef>
+<div class="runner runner-unselected" #sliderRef>
     <div class="active-runner-container"
          [style.width.%]="endThumb.positionPercent - startThumb.positionPercent"
          [style.left.%]="startThumb.positionPercent">
-        <div class="runner runner-active" #activeRunnerRef></div>
+        <div class="runner runner-selected" #activeRunnerRef></div>
     </div>
     <div class="thumb start-thumb"
          [style.left.%]="startThumb.positionPercent"
@@ -11,10 +11,25 @@
          (pointerdown)="thumbPointerDown(startThumb, $event)"
          (pointerup)="thumbPointerUp(startThumb, $event)"
          #startThumbRef>
-        <span class="thumb-label" [class.active]="draggingThumb" *ngIf="startThumb.showLabel" @fadeInOut>
+        <img class="thumb-head" src="../../../../assets/images/rounded_play_icon.svg" alt="">
+        <span class="thumb-label" *ngIf="startThumb.showLabel" @fadeInOut>
             <span class="thumb-label-text">{{ startThumb.timeStamp }}</span>
             <div class="thumb-label-triangle"></div>
         </span>
+    </div>
+    <div class="progress-thumb-ghost"
+         *ngIf="showProgressThumbGhost"
+         [style.left.%]="progressThumbGhostLeft"
+         @fadeOut>
+    </div>
+    <div class="thumb progress-thumb"
+         [class.returning]="progressThumbReturning"
+         [style.left.%]="progressThumb.positionPercent"
+         [class.hidden]="!shouldShowProgressThumb()"
+         (mousedown)="progressThumbClick()"
+         #progressThumbRef>
+        <div class="progress-thumb-head"></div>
+        <span class="thumb-label" *ngIf="progressThumb.showLabel" @fadeInOut>{{ progressThumb.timeStamp }}</span>
     </div>
     <div class="thumb end-thumb"
          [style.right.%]="100 - endThumb.positionPercent"
@@ -23,7 +38,8 @@
          (pointerdown)="thumbPointerDown(endThumb, $event)"
          (pointerup)="thumbPointerUp(endThumb, $event)"
          #endThumbRef>
-        <span class="thumb-label" [class.active]="draggingThumb" *ngIf="endThumb.showLabel" @fadeInOut>
+        <img class="thumb-head left" src="../../../../assets/images/rounded_play_icon.svg" alt="">
+        <span class="thumb-label" *ngIf="endThumb.showLabel" @fadeInOut>
             <span class="thumb-label-text">{{ endThumb.timeStamp }}</span>
             <div class="thumb-label-triangle"></div>
         </span>

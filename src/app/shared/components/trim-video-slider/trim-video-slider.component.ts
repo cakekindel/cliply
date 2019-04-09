@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import * as moment from 'moment';
-import { Observable, fromEvent, of } from 'rxjs';
-import {  takeWhile } from 'rxjs/operators';
+import { Observable, fromEvent, Subject } from 'rxjs';
+import {  takeWhile, debounceTime } from 'rxjs/operators';
+import { Clip } from '../../models/clip.model';
 
 @Component({
     selector: 'app-trim-video-slider',
@@ -19,23 +20,50 @@ import {  takeWhile } from 'rxjs/operators';
                 animate('0.1s', style({ opacity: 0 })),
             ])
         ]),
+        trigger('fadeOut', [
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate('0.1s', style({ opacity: 0 }))
+            ]),
+        ]),
     ],
 })
 export class TrimVideoSliderComponent implements OnInit {
-    private _sliderClientLeft = 0;
-    private _sliderWidth = 0;
-    public draggingThumb = false;
+    private sliderLeft = 0;
+    private sliderWidth = 0;
+    public draggingThumb?: SliderThumb;
+    public showProgressThumbGhost = false;
+    public progressThumbReturning = false;
+    public progressThumbGhostLeft?: number;
 
-    @Input() duration = 0;
-    @Output() startAtChange = new EventEmitter<number>();
-    @Output() endAtChange = new EventEmitter<number>();
+    private updateThumbnailDebounce = new Subject<number>();
+    @Output() updateThumbnail = new EventEmitter<number>();
+
+    @Input() clip = new Clip();
+
+    private currentTimeValue = 0;
+    @Input() get currentTime() {
+        return this.currentTimeValue;
+    }
+    set currentTime(val: number) {
+        this.currentTimeValue = val;
+        this.currentTimeChange.emit(val);
+    }
+    @Output() currentTimeChange = new EventEmitter<number>();
 
     @ViewChild('startThumbRef') startThumbRef?: ElementRef<HTMLDivElement>;
+    @ViewChild('progressThumbRef') progressThumbRef?: ElementRef<HTMLDivElement>;
     @ViewChild('endThumbRef') endThumbRef?: ElementRef<HTMLDivElement>;
     @ViewChild('activeRunnerRef') activeRunnerRef?: ElementRef<HTMLDivElement>;
     @ViewChild('sliderRef') sliderRef?: ElementRef<HTMLDivElement>;
 
     startThumb: SliderThumb = {
+        positionPercent: 0,
+        showLabel: false,
+        timeStamp: '',
+    };
+
+    progressThumb: SliderThumb = {
         positionPercent: 0,
         showLabel: false,
         timeStamp: '',
@@ -47,49 +75,110 @@ export class TrimVideoSliderComponent implements OnInit {
         timeStamp: '',
     };
 
-    constructor() { }
+    ngOnInit() {
+        // this gets destroyed and recreated, so use a getter
+        const getProgressThumbRef = () => this.progressThumbRef;
 
-    thumbPointerDown(thumb: SliderThumb, event: PointerEvent) {
-        thumb.showLabel = true;
-        this.draggingThumb = true;
+        this.startThumb = {
+            positionPercent: this.msToPercent(this.clip.startAtMs),
+            timeStamp: this.toTimestamp(this.clip.startAtMs),
+            elementRef: this.startThumbRef,
+            showLabel: false,
+        };
+
+        this.progressThumb = {
+            positionPercent: this.startThumb.positionPercent,
+            timeStamp: this.startThumb.timeStamp,
+            get elementRef() { return getProgressThumbRef(); },
+            showLabel: false,
+        };
+
+        this.endThumb = {
+            positionPercent: this.msToPercent(this.clip.endAtMs),
+            timeStamp: this.toTimestamp(this.clip.endAtMs),
+            elementRef: this.endThumbRef,
+            showLabel: false,
+        };
+
+        this.updateThumbnailDebounce
+            .pipe(debounceTime(10))
+            .subscribe((time) => this.updateThumbnail.emit(time));
+
+        this.updateThumbnailDebounce.next(this.currentTime);
+    }
+
+    @HostListener('pointermove', ['$event'])
+    hostPointerMove(event: PointerEvent) {
+        this.progressThumbReturning = false;
+        this.progressThumb.showLabel = true;
+        this.showProgressThumbGhost = true;
+
+        if (this.progressThumbGhostLeft === undefined) {
+            this.progressThumbGhostLeft = this.progressThumb.positionPercent;
+        }
 
         if (this.sliderRef) {
             const clientRect = this.sliderRef.nativeElement.getClientRects()[0];
-            this._sliderClientLeft = clientRect.left;
-            this._sliderWidth = clientRect.width;
-        }
+            this.sliderLeft = clientRect.left;
+            this.sliderWidth = clientRect.width;
 
-        if (thumb.elementRef) {
-            const onPointerMoveObservable = fromEvent(thumb.elementRef.nativeElement, 'pointermove') as Observable<PointerEvent>;
-
-            onPointerMoveObservable.pipe(takeWhile(() => {
-                                        if (thumb && thumb.elementRef) {
-                                            return thumb.elementRef.nativeElement.hasPointerCapture(event.pointerId);
-                                        } else {
-                                            return false;
-                                        }
-                                    }))
-                                    .subscribe((e) => this.onPointerMove(thumb, e));
-
-            thumb.elementRef.nativeElement.setPointerCapture(event.pointerId);
+            if (this.draggingThumb) {
+                this.thumbPointerMove(this.draggingThumb, event);
+            } else {
+                this.thumbPointerMove(this.progressThumb, event);
+            }
         }
     }
 
-    thumbPointerUp(thumb: SliderThumb, event: PointerEvent) {
-        this.draggingThumb = false;
+    @HostListener('pointerleave', ['$event'])
+    hostPointerLeave(event: PointerEvent) {
+        this.progressThumbReturning = true;
+        this.showProgressThumbGhost = false;
+        this.progressThumbGhostLeft = undefined;
+
+        this.progressThumb.showLabel = false;
+        this.progressThumb.positionPercent = this.msToPercent(this.currentTime);
+        this.updateThumbnailDebounce.next(this.currentTime);
+    }
+
+    thumbPointerDown(thumb: SliderThumb, event: PointerEvent) {
         if (thumb.elementRef) {
-            thumb.elementRef.nativeElement.onpointermove = null;
+            thumb.elementRef.nativeElement.setPointerCapture(event.pointerId);
+        }
+
+        this.showProgressThumbGhost = false;
+        thumb.showLabel = true;
+        this.draggingThumb = thumb;
+    }
+
+    thumbPointerUp(thumb: SliderThumb, event: PointerEvent) {
+        this.draggingThumb = undefined;
+
+        const positionMs = this.percentToMs(thumb.positionPercent);
+        if (thumb === this.startThumb) {
+            this.clip.startAtMs = positionMs;
+            this.progressThumb.positionPercent = thumb.positionPercent;
+            this.currentTime = this.percentToMs(thumb.positionPercent);
+        } else if (thumb === this.endThumb) {
+            this.clip.endAtMs = positionMs;
+        }
+
+        if (thumb.elementRef) {
             thumb.elementRef.nativeElement.releasePointerCapture(event.pointerId);
         }
     }
 
-    onPointerMove(thumb: SliderThumb, event: PointerEvent) {
-        const thumbWidth = (event.target as HTMLDivElement).clientWidth;
+    thumbPointerMove(thumb: SliderThumb, event: PointerEvent) {
+        if (!thumb.elementRef) {
+            return;
+        }
 
-        let rawPercent = ((event.clientX - this._sliderClientLeft - thumbWidth / 2) / this._sliderWidth);
+        const thumbWidth = thumb.elementRef.nativeElement.clientWidth;
+
+        let rawPercent = ((event.clientX - this.sliderLeft - thumbWidth / 2) / this.sliderWidth);
 
         if (thumb === this.endThumb) {
-            rawPercent = ((event.clientX - this._sliderClientLeft + thumbWidth / 2) / this._sliderWidth);
+            rawPercent = ((event.clientX - this.sliderLeft + thumbWidth / 2) / this.sliderWidth);
         }
 
         thumb.positionPercent = Math.round(rawPercent * 1000) / 10;
@@ -100,38 +189,34 @@ export class TrimVideoSliderComponent implements OnInit {
             thumb.positionPercent = 100;
         }
 
-        const thumbTime = this.duration * (thumb.positionPercent / 100);
+        const thumbTime = this.clip.durationMs * (thumb.positionPercent / 100);
         thumb.timeStamp = this.toTimestamp(thumbTime);
 
-        if (thumb === this.startThumb) {
-            this.startAtChange.emit(thumbTime);
-        } else {
-            this.endAtChange.emit(thumbTime);
-        }
+        this.updateThumbnailDebounce.next(thumbTime);
     }
 
-    ngOnInit() {
-        if (this.startThumbRef) {
-            this.startThumb.elementRef = this.startThumbRef;
-        }
+    shouldShowProgressThumb() {
+        const closeToStartThumb = this.progressThumb.positionPercent > this.startThumb.positionPercent - 1
+                                  && this.progressThumb.positionPercent < this.startThumb.positionPercent + 1;
 
-        if (this.endThumbRef) {
-            this.endThumb.elementRef = this.endThumbRef;
-        }
+        const closeToEndThumb = this.progressThumb.positionPercent > this.endThumb.positionPercent - 2
+                                && this.progressThumb.positionPercent < this.endThumb.positionPercent + 1;
 
-        this.startThumb = {
-            positionPercent: 0,
-            timeStamp: '00:00',
-            elementRef: this.startThumbRef,
-            showLabel: false,
-        };
+        return !this.draggingThumb && !closeToStartThumb && !closeToEndThumb;
+    }
 
-        this.endThumb = {
-            positionPercent: 100,
-            timeStamp: this.toTimestamp(this.duration),
-            elementRef: this.endThumbRef,
-            showLabel: false,
-        };
+    progressThumbClick() {
+        this.currentTime = this.percentToMs(this.progressThumb.positionPercent);
+        this.progressThumbGhostLeft = this.progressThumb.positionPercent;
+        this.showProgressThumbGhost = false;
+    }
+
+    private percentToMs(percent: number) {
+        return this.clip.durationMs * (percent / 100);
+    }
+
+    private msToPercent(ms: number) {
+        return Math.round((ms / this.clip.durationMs) * 10000) / 100;
     }
 
     private toTimestamp(duration: number) {
