@@ -16,6 +16,7 @@ import { MatRippleModule, MatTooltipModule, MatInputModule, MatCheckboxModule, M
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoadLocalFilePipe } from './pipes/load-local-file.pipe';
 import { TrimVideoSliderComponent } from './components/trim-video-slider/trim-video-slider.component';
+import { PlayControlsComponent } from './components/play-controls/play-controls.component';
 
 @NgModule({
     imports: [
@@ -40,6 +41,7 @@ import { TrimVideoSliderComponent } from './components/trim-video-slider/trim-vi
         ThumbHoverPreviewComponent,
         LoadLocalFilePipe,
         TrimVideoSliderComponent,
+        PlayControlsComponent,
     ],
     exports: [
         MorphFromDirective,
