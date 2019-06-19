@@ -1,21 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { QueueComponent } from './queue/queue.component';
-import { SplashComponent } from './splash/splash.component';
-
-const routes: Routes = [
-    {
-        path: 'splash',
-        component: SplashComponent
-    },
-    {
-        path: 'queue',
-        component: QueueComponent
-    }
-];
+import { RouterModule } from '@angular/router';
+import { AppRoutes } from './app-routes.model';
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { useHash: true })],
+    imports: [RouterModule.forRoot(AppRoutes.routes, { useHash: true })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

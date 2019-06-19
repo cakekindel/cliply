@@ -1,5 +1,5 @@
 import { Component, Input, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { Clip } from '../../../models/clip.model';
+import { Clip } from '../../../../core/models/clip/clip.model';
 
 @Component({
   selector: 'app-thumb-hover-preview',

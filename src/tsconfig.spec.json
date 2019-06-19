@@ -6,7 +6,12 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+        "child_process": ["spec-utils/child_process.stub.js"],
+        "fs": ["spec-utils/fs.stub.js"],
+    }
   },
   "files": [
     "test.ts",
@@ -14,6 +19,7 @@
   ],
   "include": [
     "**/*.spec.ts",
+    "./spec-utils.ts",
     "**/*.d.ts"
   ],
   "exclude": [

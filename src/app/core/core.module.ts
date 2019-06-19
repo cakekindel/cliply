@@ -1,20 +1,27 @@
 import { NgModule } from '@angular/core';
 
-import { FfmpegService } from './ffmpeg.service';
-import { ClipStorageService } from './clip-storage.service';
-import { SettingsService } from './settings.service';
-import { ElectronService } from './electron.service';
-import { NavigationService } from './navigation.service';
-import { EditClipService } from './edit-clip.service';
+import {
+    ElectronService,
+    FfmpegService,
+    JsonStoreService,
+    LocalFileService,
+} from './services/utility';
+
+import {
+    EditClipService,
+    TopBarService,
+    ClipsService,
+} from './services/ui';
 
 @NgModule({
     providers: [
         FfmpegService,
-        ClipStorageService,
-        SettingsService,
+        ClipsService,
         ElectronService,
-        NavigationService,
         EditClipService,
+        TopBarService,
+        JsonStoreService,
+        LocalFileService,
     ]
 })
 export class CoreModule { }

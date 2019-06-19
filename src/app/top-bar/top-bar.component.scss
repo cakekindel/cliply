@@ -1,0 +1,49 @@
+@import 'colors.scss';
+@import 'dimensions.scss';
+
+$top-bar-padding: 16px;
+
+:host {
+    position: fixed;
+    display: flex;
+    align-items: center;
+
+    top: $title-bar-height;
+    left: $window-border-width;
+
+    width: calc(100% - #{$window-border-width * 2});
+    height: $top-bar-height;
+    padding: 16px;
+
+    background: $color-background-variant;
+
+    .quick-button-container {
+        cursor: pointer;
+
+        $quick-button-diameter: 52px;
+        $quick-button-margin: ($top-bar-height - $quick-button-diameter) / 2;
+
+        width: $quick-button-diameter;
+        height: $quick-button-diameter;
+
+        margin-left: $quick-button-margin - $top-bar-padding;
+        margin-right: $quick-button-margin;
+
+        border-radius: 100%;
+        background: rgba($color-primary, 0.24);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .quick-button {
+            color: $color-primary;
+            font-size: $quick-button-diameter * 0.6;
+        }
+    }
+
+    .logo {
+        height: 100%;
+        margin: $top-bar-padding 0;
+    }
+}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ElectronService } from '../core/electron.service';
+import { ElectronService } from '../core/services/utility/electron.service';
 
 @Component({
   selector: 'app-window-title-bar',

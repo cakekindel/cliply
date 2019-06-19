@@ -1,5 +1,6 @@
 @import 'colors.scss';
 @import 'fonts.scss';
+@import 'dimensions.scss';
 
 :host {
     position: absolute;
@@ -11,16 +12,16 @@
     top: 1px;
     left: 2px;
     margin: 0;
-    height: 29px;
+    height: $title-bar-height - 1px;
     width: calc(100% - 4px);
     z-index: 1000;
 
-    background: $color-secondary;
+    background: $color-primary-variant;
     -webkit-app-region: drag;
 
     .cliply-title {
         margin: 0;
-        margin-left: 10px;
+        margin-left: 6px;
         color: $color-font-secondary;
     }
 

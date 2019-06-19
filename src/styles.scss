@@ -1,16 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'colors.scss';
+@import 'dimensions.scss';
 @import 'fonts.scss';
 @import 'animations.scss';
 @import 'morph.scss';
-
-//Property Declaration Order:
-// Positioning
-// Box-model
-// Typography
-// Visual
-// Misc
 
 html, body {
     margin: 0;
@@ -31,9 +23,9 @@ body {
 }
 
 app-root {
-    border: 2px solid $color-secondary;
-    border-top-width: 1px;
-    padding-top: 30px;
+    border: $window-border-width solid $color-primary-variant;
+    border-top-width: $window-border-width / 2;
+    padding-top: $title-bar-height + $top-bar-height;
     height: 100%;
     width: 100%;
     display: flex;
@@ -42,8 +34,15 @@ app-root {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: $font-weight-bold;
     margin: 0;
+}
+
+h1, h2 {
+    font-weight: $font-weight-regular;
+}
+
+h3, h4 {
+    font-weight: $font-weight-semibold;
 }
 
 h5, h6 {
@@ -52,6 +51,49 @@ h5, h6 {
 
 input.mat-input-element {
     font-weight: $font-weight-semibold;
+}
+
+.interactable {
+    position: relative;
+    cursor: pointer;
+
+    border-color: $color-primary-variant;
+    border-width: 0;
+    border-style: solid;
+
+    transition: border-width 0.1s, border-color 0.1s;
+    transition-timing-function: ease-out;
+
+    div.interactable-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        height: 100%;
+        width: 100%;
+
+        background: $color-primary;
+        
+        opacity: 0;
+
+        transition: opacity 0.1s;
+        transition-timing-function: ease-out;
+    }
+
+    &:hover {
+        .interactable-overlay {
+            opacity: 0.04;
+        }
+    }
+
+    &:active {
+        border-width: 2px;
+        border-color: $color-primary;
+
+        .interactable-overlay {
+            opacity: 0.1;
+        }
+    }
 }
 
 .material-icons {

@@ -3,6 +3,9 @@ import { app, BrowserWindow, screen, protocol } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
+import * as electronReload from 'electron-reload';
+import * as electron from 'electron';
+
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
@@ -23,15 +26,15 @@ function createWindow() {
         width: size.width,
         height: size.height,
         webPreferences: {
-            webSecurity: AppConfig.production
+            webSecurity: AppConfig.production,
+            nodeIntegration: true,
         },
         frame: false,
     });
 
     if (serve) {
-        require('electron-reload')(__dirname, {
-            electron: require(`${__dirname}/node_modules/electron`)
-        });
+        console.log(__dirname);
+        electronReload(__dirname);
         win.loadURL('http://localhost:4200');
     } else {
         win.loadURL(url.format({

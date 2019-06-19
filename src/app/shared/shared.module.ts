@@ -7,13 +7,11 @@ import { ButtonComponent } from './components/button/button.component';
 import { ClipCardComponent } from './components/clip-card/clip-card.component';
 import { ExtendedFabComponent } from './components/extended-fab/extended-fab.component';
 import { ChipComponent } from './components/chip/chip.component';
-import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { ThumbHoverPreviewComponent } from './components/clip-card/thumb-hover-preview/thumb-hover-preview.component';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatRippleModule, MatTooltipModule, MatInputModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoadLocalFilePipe } from './pipes/load-local-file.pipe';
 import { TrimVideoSliderComponent } from './components/trim-video-slider/trim-video-slider.component';
 import { PlayControlsComponent } from './components/play-controls/play-controls.component';
@@ -27,7 +25,6 @@ import { PlayControlsComponent } from './components/play-controls/play-controls.
         MatInputModule,
         MatCheckboxModule,
         MatRadioModule,
-        BrowserAnimationsModule,
     ],
     declarations: [
         MorphFromDirective,
@@ -36,7 +33,6 @@ import { PlayControlsComponent } from './components/play-controls/play-controls.
         ClipCardComponent,
         ExtendedFabComponent,
         ChipComponent,
-        TopBarComponent,
         EditClipComponent,
         ThumbHoverPreviewComponent,
         LoadLocalFilePipe,
@@ -50,16 +46,16 @@ import { PlayControlsComponent } from './components/play-controls/play-controls.
         ClipCardComponent,
         ExtendedFabComponent,
         ChipComponent,
-        TopBarComponent,
         EditClipComponent,
         ThumbHoverPreviewComponent,
 
+        CommonModule,
+        FormsModule,
         MatRippleModule,
         MatTooltipModule,
         MatInputModule,
         MatCheckboxModule,
         MatRadioModule,
-        BrowserAnimationsModule,
     ]
 })
 export class SharedModule { }

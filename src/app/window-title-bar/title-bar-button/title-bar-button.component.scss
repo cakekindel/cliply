@@ -10,23 +10,15 @@
 
     transition: background 0.1s ease;
 
-    background: $color-secondary;
-
-    &.dark {
-        background: rgba($color-secondary-dark, 0.5);
-
-        &:hover {
-            background: $color-secondary-dark;
-        }
-    }
+    background: $color-primary-variant;
 
     &:hover {
         transition: background 0.05s ease;
-        background: rgba($color-secondary-dark, 0.5);
+        background: rgba($color-on-background-variants, 0.1);
     }
 
-    &:active, &.dark:active {
-        background: rgba($color-primary, 0.5);
+    &:active {
+        background: rgba($color-on-background-variants, 0.2);
     }
 
     i {

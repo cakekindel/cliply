@@ -1,4 +1,4 @@
-<div class="runner runner-unselected" #sliderRef>
+<!-- <div class="runner runner-unselected" #sliderRef>
     <div class="active-runner-container"
          [style.width.%]="endThumb.positionPercent - startThumb.positionPercent"
          [style.left.%]="startThumb.positionPercent">
@@ -7,7 +7,7 @@
     <div class="thumb start-thumb"
          [style.left.%]="startThumb.positionPercent"
          (mouseover)="startThumb.showLabel = true"
-         (mouseleave)="startThumb.showLabel = draggingThumb"
+         (mouseleave)="startThumb.showLabel = !!draggingThumb"
          (pointerdown)="thumbPointerDown(startThumb, $event)"
          (pointerup)="thumbPointerUp(startThumb, $event)"
          #startThumbRef>
@@ -34,7 +34,7 @@
     <div class="thumb end-thumb"
          [style.right.%]="100 - endThumb.positionPercent"
          (mouseover)="endThumb.showLabel = true"
-         (mouseleave)="endThumb.showLabel = draggingThumb"
+         (mouseleave)="endThumb.showLabel = !!draggingThumb"
          (pointerdown)="thumbPointerDown(endThumb, $event)"
          (pointerup)="thumbPointerUp(endThumb, $event)"
          #endThumbRef>
@@ -44,4 +44,4 @@
             <div class="thumb-label-triangle"></div>
         </span>
     </div>
-</div>
+</div> -->

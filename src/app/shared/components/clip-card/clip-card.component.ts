@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
-import { Clip } from '../../models/clip.model';
-import { EditClipService } from '../../../core/edit-clip.service';
+import { Clip } from '../../../core/models/clip/clip.model';
+import { EditClipService } from '../../../core/services/ui/edit-clip.service';
 
 @Component({
     selector: 'app-clip-card',

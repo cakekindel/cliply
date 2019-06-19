@@ -1,29 +1,25 @@
-import { Component } from '@angular/core';
-import { ElectronService } from './core/electron.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ElectronService } from './core/services/utility/electron.service';
 import { AppConfig } from '../environments/environment';
 import { Router } from '@angular/router';
-import { NavigationService } from './core/navigation.service';
-import { SettingsService } from './core/settings.service';
-import { ClipStorageService } from './core/clip-storage.service';
+import { ClipsService } from './core/services/ui/clips.service';
+import { TopBarService } from './core/services/ui';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
     constructor(
         electronService: ElectronService,
-        router: Router,
-        navSvc: NavigationService,
-        settingsService: SettingsService,
-        clipsStorage: ClipStorageService,
+        public topBarService: TopBarService,
     ) {
         console.log('AppConfig', AppConfig);
-        router.navigateByUrl('splash');
 
         // comment this line to show splash screen
-        navSvc.navigateByItem(navSvc.navItems.queue);
+        // navSvc.navigateByItem(navSvc.navItemsIterable[0]);
 
         if (electronService.isElectron()) {
             console.log('Mode electron');

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { timer } from 'rxjs';
-import { NavigationService } from '../core/navigation.service';
 
 @Component({
     selector: 'app-splash',
@@ -15,7 +14,7 @@ export class SplashComponent implements OnInit {
     videoDuration = 2000;
     fadeDuration = 500;
 
-    constructor(private navigationService: NavigationService) { }
+    constructor() { }
 
     ngOnInit() {
         timer(this.fadeDuration + this.videoDuration).subscribe(
@@ -23,7 +22,7 @@ export class SplashComponent implements OnInit {
         );
 
         timer(this.fadeDuration + this.videoDuration + this.fadeDuration).subscribe(
-            () => { this.navigationService.navigateByItem(this.navigationService.navItems.queue); }
+            // () => { this.navigationService.navigateByItem(this.navigationService.navItemsIterable[0]); }
         );
     }
 }
