@@ -1,0 +1,5 @@
+{
+  "plugins": [ "@babel/plugin-transform-react-jsx-compat"
+             , "@babel/plugin-transform-modules-commonjs"
+             ]
+}

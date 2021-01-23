@@ -1,0 +1,8 @@
+environment: browser
+include:
+  - ./dist/*.js
+exclude:
+  - ./node_modules/**
+types:
+  - ./@types
+  - ./node_modules/@types
