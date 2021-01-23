@@ -1,9 +1,0 @@
-<div class="quick-button-container interactable mat-ripple"
-     matRipple
-     [matRippleColor]="'rgba(255, 255, 255, 0.1)'"
-     (click)="quickButtonClick(quickButton)"
-     *ngIf="quickButton$ | async; let quickButton">
-    <div class="interactable-overlay"></div>
-    <i class="quick-button material-icons">{{ quickButton.icon }}</i>
-</div>
-<img src="../../assets/images/logo-full-no-bg.svg" alt="" class="logo">
