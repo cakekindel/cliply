@@ -1,0 +1,7 @@
+.Card-theme-primary.Card-depth-0 {
+  background: var(--color-primary-lighter);
+}
+
+.Card-theme-primary.Card-depth-1 {
+  background: var(--color-primary-light);
+}

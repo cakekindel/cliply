@@ -1,0 +1,37 @@
+.Button {
+  outline: none;
+  border: none;
+  border-radius: 1000px;
+  color: var(--color-bg);
+
+  font-weight: bold;
+}
+
+.Button-size-large {
+  font-size: 12pt;
+  padding: var(--sizing-basis)
+           calc(var(--sizing-basis) * 2.5);
+}
+
+.Button-size-large  span,
+.Button-size-normal span {
+  margin-left: var(--sizing-basis);
+}
+
+.Button-size-normal {
+  font-size: 10pt;
+  padding: calc(var(--sizing-basis) * 0.5)
+           calc(var(--sizing-basis) * 1.5);
+}
+
+.Button-size-large span {
+  margin-left: var(--sizing-basis);
+}
+
+.Button-theme-primary {
+  background: var(--color-primary-accent);
+}
+
+.Button-theme-secondary {
+  background: var(--color-secondary-accent);
+}
