@@ -1,0 +1,143 @@
+/* Boilerplate */
+body, h1, h2, h3, h4, h5, p {
+  margin: 0;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+/* Type */
+h1, h2 {
+  font-family: 'Nunito', sans-serif;
+}
+
+.app {
+  font-family: 'Inter', sans-serif;
+}
+
+.type-details {
+  color: var(--color-primary-dark);
+  font-weight: 800;
+  font-size: 10pt;
+}
+
+/* Variables */
+.app {
+  --sizing-basis: 8px;
+
+  --color-bg: #212623;
+
+  --color-primary-accent: #71C38A;
+  --color-primary-light: #ACD1B7;
+  --color-primary-lighter: #DDF0E3;
+  --color-primary-dark: #3C4C41;
+
+  --color-secondary-accent: #E39E66;
+  --color-secondary-light: #E2BD9F;
+  --color-secondary-lighter: #F5E8DE;
+  --color-secondary-dark: #5D4C3E;
+}
+
+
+/* Theming */
+.theme-primary {
+  background: var(--color-primary-accent);
+  color: var(--color-bg);
+}
+
+.theme-primary-dark {
+  background: var(--color-primary-dark);
+  color: var(--color-primary-lighter);
+}
+
+.theme-primary-light {
+  background: var(--color-primary-light);
+  color: var(--color-bg);
+}
+
+.theme-primary-lighter {
+  background: var(--color-primary-lighter);
+  color: var(--color-bg);
+}
+
+/* App styles */
+.app {
+  background: var(--color-bg);
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* App layout */
+.app {
+  display: grid;
+  grid: " title logo " 96px
+        " body  body " auto
+        / 2fr   1fr
+        ;
+
+  --gap: calc(var(--sizing-basis) * 2);
+  padding: var(--gap);
+  column-gap: var(--gap);
+  row-gap: var(--gap);
+}
+
+.app .grid-title {
+  grid-area: title;
+}
+
+.app .grid-logo {
+  grid-area: logo;
+}
+
+.app .grid-body {
+  grid-area: body;
+}
+
+/* Utility classes */
+.flex-vert {
+  flex-direction: column;
+}
+
+.labelled-icon { /*TODO: WTF do i name this class?*/
+  display: flex;
+  align-items: center;
+}
+
+.labelled-icon i {
+  margin-right: var(--sizing-basis);
+}
+
+/* Cards */
+.card {
+  display: flex;
+  align-items: flex-start;
+  border-radius: calc( var(--sizing-basis) * 2 );
+  padding: calc( var(--sizing-basis) * 3 );
+}
+
+/* child cards get less padding, smaller radius & hard width */
+.card .card {
+  --card-padding: calc( var(--sizing-basis) * 2 );
+  --card-width:   calc( var(--sizing-basis) * 2 * 16 );
+  padding: var(--card-padding);
+  width:   var(--card-width);
+}
+
+.card .card > *:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+/* card thumbnail */
+.card img {
+  --thumb-width:  calc( var(--card-width) - (var(--card-padding) * 2) ); /* calc the width so I can refer to it in the height;
+                                                                            this is the same width as width: 100% but i want to
+                                                                            make sure it's always 16:9 which would be impossible
+                                                                            in plain CSS
+                                                                         */
+  --thumb-height: calc( var(--thumb-width) / (16/9) ); /* width:height == 16:9 */
+  width:  var(--thumb-width);
+  height: var(--thumb-height);
+  border-radius: calc( var(--sizing-basis) * 2 );
+  object-fit: cover; /* scale up to fill 16:9 box */
+}
